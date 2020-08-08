@@ -25,43 +25,51 @@ public class mainClass {
                 userCreation(url, username, password);
             }
             else if (selection == 2){
-                Connection connection = DriverManager.getConnection(url,username,password);
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
-                while (resultSet.next()){
-                    User user = new User();
-                    user.setUserId(resultSet.getInt("userId"));
-                    user.setUserLogin(resultSet.getString("userLogin"));
-                    user.setUserPassword(resultSet.getString("userPassword"));
-                    user.setIsAdmin(resultSet.getInt("isAdmin"));
-                    userList.add(user);
-                }
-                resultSet.close();
-                statement.close();
-                connection.close();
-
-                System.out.println("Please type in your username:");
-                tryUsername = scan.next();
-                System.out.println("Please type in your password:");
-                tryPassword = scan.next();
-
-                for (User user : userList){
-
-                    if (user.getUserLogin().equalsIgnoreCase(tryUsername)){
-                        if (user.getUserPassword().equals(tryPassword)){
-                            loginSuccessful = true;
-                        }
-                    }
-                }
-                if (loginSuccessful){
-                    System.out.println("Login successful");
-                } else {
-                    System.out.println("Username or password is not correct.");
-                }
-
+                getUsersFromDb(url, username, password);
+                loginCheck();
             }
 
         } while (selection!=3);
+    }
+
+    private static void loginCheck() {
+        String tryUsername;
+        String tryPassword;
+        System.out.println("Please type in your username:");
+        tryUsername = scan.next();
+        System.out.println("Please type in your password:");
+        tryPassword = scan.next();
+
+        for (User user : userList){
+
+            if (user.getUserLogin().equalsIgnoreCase(tryUsername)){
+                if (user.getUserPassword().equals(tryPassword)){
+                    loginSuccessful = true;
+                }
+            }
+        }
+        if (loginSuccessful){
+            System.out.println("Login successful");
+        } else {
+            System.out.println("Username or password is not correct.");
+        }
+    }
+
+    private static void getUsersFromDb(String url, String username, String password) throws SQLException {
+        Connection connection = DriverManager.getConnection(url,username,password);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+        while (resultSet.next()){
+            User user = new User();
+            user.setUserId(resultSet.getInt("userId"));
+            user.setUserLogin(resultSet.getString("userLogin"));
+            user.setUserPassword(resultSet.getString("userPassword"));
+            user.setIsAdmin(resultSet.getInt("isAdmin"));
+            userList.add(user);
+        }
+        resultSet.close();
+        statement.close();
+        connection.close();
     }
 
     private static void userCreation(String url, String username, String password) throws SQLException {
