@@ -1,0 +1,35 @@
+shooting range / airsoft data management application
+
+login system with database: store new users, connect using data in database, password hashing (optional)
+User types and functions:
+1. Unregistered User:
+can register
+view top 5 players (optional)
+2. registered User:
+can participate in "shooting game" and see accuracy // i can see two possible approaches here, either it's gonna be
+                                                        random number generator, or typing in a number from 1 to 100
+                                                        and based on that we'll calculate accuracy
+can view own stats: accuracy from shooting game and KDA of airsoft games.
+can update their personal info (change nickname, change password, change age)
+can create teams and invite other users (optional)
+can accept team invitations and see stats of a team (optional)
+can view top 5 players (optional)
+3. super User:
+all the functions of a regular User
+can create new users on the system, even if they are not registered
+can create airsoft game events
+can submit airsoft game data for every User
+
+registration rules:
+username must be unique
+password (strict password protection rules, at least 1 capital letter and number, no less than 8 symbols [regex])
+nickname (distinguishing users, must be unique as well)
+age
+
+airsoft game events will be stored on database with the following info:
+participant nicknames (separate users table, separate events table will be interconnected), their score: kills, deaths, assists
+
+player info will be stored on database with the following info:
+username, accuracy in "shooting game", event participation count, kills total, death total, assist total, KDA score
+
+(note to self, TOP 5 players could be filtered by various factors. KDA score, most participated events, most kills etc.)
