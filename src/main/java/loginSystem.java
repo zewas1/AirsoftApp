@@ -10,7 +10,11 @@ public class loginSystem {
     private static String createUsername;
     private static String createPassword;
     public static boolean loginSuccessful = false;
+    public static int userIsAdmin;
     public static String currentUser = null;
+    public static int currentKills = 0;
+    public static int currentDeaths = 0;
+    public static int currentAssists = 0;
     public static List<User> userListComparison = new ArrayList<>();
 
     String tryUsername;
@@ -29,12 +33,19 @@ public class loginSystem {
                 if (user.getUserPassword().equals(tryPassword)) {
                     loginSuccessful = true;
                     currentUser = user.getUserLogin();
+                    userIsAdmin = user.getIsAdmin();
+                    currentKills = user.getKillCount();
+                    currentAssists = user.getAssistCount();
+                    currentDeaths = user.getDeathCount();
                 }
             }
         }
         if (loginSuccessful) {
             System.out.println("Login successful");
             System.out.println(currentUser);
+            System.out.println(currentKills);
+            System.out.println(currentAssists);
+            System.out.println(currentDeaths);
         } else {
             System.out.println("Username or password is not correct.");
         }
@@ -52,6 +63,9 @@ public class loginSystem {
                 user.setUserLogin(resultSet.getString("userLogin"));
                 user.setUserPassword(resultSet.getString("userPassword"));
                 user.setIsAdmin(resultSet.getInt("isAdmin"));
+                user.setKillCount(resultSet.getInt("killCount"));
+                user.setDeathCount(resultSet.getInt("deathCount"));
+                user.setAssistCount(resultSet.getInt("assistCount"));
                 userList.add(user);
             }
             resultSet.close();
