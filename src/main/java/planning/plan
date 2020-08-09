@@ -1,35 +1,35 @@
 shooting range / airsoft data management application
 
-login system with database: store new users, connect using data in database, password hashing (optional)
-LoginSystem.User types and functions:
-1. Unregistered LoginSystem.User:
-can register
+login system with database: store new users, connect using data in database, password hashing (optional) ---> user creation done, connected with MYSQL.
+user types and functions:
+1. Unregistered user: ---> basic main menu view done.
+can register ---> done
 view top 5 players (optional)
-2. registered LoginSystem.User:
-can participate in "shooting game" and see accuracy // i can see two possible approaches here, either it's gonna be
-                                                        random number generator, or typing in a number from 1 to 100
-                                                        and based on that we'll calculate accuracy
-can view own stats: accuracy from shooting game and KDA of airsoft games.
+2. registered user: ---> registered user is distinguished in the application
+can participate in "shooting game" and see accuracy
+can view own stats: accuracy from shooting game and KDA of airsoft games. ---> stat view is currently available only for checking stats of your airsoft game data.
 can update their personal info (change nickname, change password, change age)
 can create teams and invite other users (optional)
 can accept team invitations and see stats of a team (optional)
 can view top 5 players (optional)
-3. super LoginSystem.User:
-all the functions of a regular LoginSystem.User
+3. super user: ---> super user is
+all the functions of a regular user ---> regular user's functions added to the super user, but this is a work-in progress still.
 can create new users on the system, even if they are not registered
 can create airsoft game events
-can submit airsoft game data for every LoginSystem.User
+can submit airsoft game data for every user ---> partially, at the moment super user can access any users, but can't do any changes yet.
 
 registration rules:
-username must be unique
-password (strict password protection rules, at least 1 capital letter and number, no less than 8 symbols [regex])
-nickname (distinguishing users, must be unique as well)
-age
+username must be unique ---> done
+password (strict password protection rules, at least 1 capital letter and number, no less than 8 symbols [regex]) ---> done
+nickname (distinguishing users, must be unique as well) ---> dropped. Username will be enough, there is no reason to distinguish users twice.
+age ---> might do at some point, from now on treat it as optional.
 
 airsoft game events will be stored on database with the following info:
 participant nicknames (separate users table, separate events table will be interconnected), their score: kills, deaths, assists
 
 player info will be stored on database with the following info:
-username, accuracy in "shooting game", event participation count, kills total, death total, assist total, KDA score
+username, accuracy in "shooting game", event participation count, kills total, death total, assist total, KDA score --->all done except for "shooting game", as it's not done yet
 
 (note to self, TOP 5 players could be filtered by various factors. KDA score, most participated events, most kills etc.)
+
+if possible look into possibility of checking if mysql tables are already created, if not, make a class to create necessary tables to run the application correctly.
