@@ -4,7 +4,7 @@ import menus.MainMenu;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-//strategy pattern
+//think about strategy patterns
 
 public class MainClass {
     public static final Scanner scan = new Scanner(System.in);

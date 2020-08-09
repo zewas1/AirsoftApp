@@ -1,0 +1,2 @@
+1. MAJOR BUG in menu logic. When you log in with an existing user, log out and then create a new user, you cannot use
+him to log in. FIXED

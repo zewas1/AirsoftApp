@@ -104,6 +104,8 @@ public class LoginSystem {
                 }
             }
         } while (!usernameFit);
+        userList.clear();
+        userListComparison.clear();
     }
 
     private static void passwordCreation() {

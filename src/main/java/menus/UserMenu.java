@@ -24,6 +24,8 @@ public class UserMenu {
         if (MainClass.menuSelection == 3)
         {
             LoginSystem.loginSuccessful = false;
+            LoginSystem.userList.clear();
+            LoginSystem.userListComparison.clear();
         }
     }
 }
