@@ -9,6 +9,7 @@ import menus.MainMenu;
 public class LoginSystem {
     public static final Scanner scan = new Scanner(System.in);
     private static boolean passwordFit = false;
+    private static boolean usernameFit = false;
     public static List<User> userList = new ArrayList<>();
     private static String createUsername;
     private static String createPassword;
@@ -87,10 +88,22 @@ public class LoginSystem {
         connection.close();
     }
 
-    private static void usernameCreation() {
+    private static void usernameCreation() throws SQLException {
         // establish username uniqueness
-        System.out.println("Create your username");
-        createUsername = scan.next();
+        do {
+            System.out.println("Create your username");
+            createUsername = scan.next();
+            getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
+            for (User user : userList) {
+                if (user.getUserLogin().equalsIgnoreCase(createUsername)) {
+                    System.out.println("This username already exists!");
+                    usernameFit = false;
+                    break;
+                } else {
+                    usernameFit = true;
+                }
+            }
+        } while (!usernameFit);
     }
 
     private static void passwordCreation() {

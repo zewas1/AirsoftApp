@@ -33,5 +33,4 @@ public class MainMenu {
             }
         } while (selection != 3);
     }
-
 }

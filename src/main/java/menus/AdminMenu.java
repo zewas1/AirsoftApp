@@ -26,5 +26,4 @@ public class AdminMenu {
             LoginSystem.loginSuccessful = false;
         }
     }
-
 }
