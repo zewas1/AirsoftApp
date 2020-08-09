@@ -5,12 +5,13 @@ import java.util.Scanner;
 
 public class loginSystem {
     public static final Scanner scan = new Scanner(System.in);
-    public static int selection = 0;
-    public static boolean passwordFit = false;
+    private static boolean passwordFit = false;
     public static List<User> userList = new ArrayList<>();
-    public static String createUsername;
-    public static String createPassword;
+    private static String createUsername;
+    private static String createPassword;
     public static boolean loginSuccessful = false;
+    public static String currentUser = null;
+    public static List<User> userListComparison = new ArrayList<>();
 
     String tryUsername;
     String tryPassword;
@@ -23,41 +24,45 @@ public class loginSystem {
         System.out.println("Please type in your password:");
         tryPassword = scan.next();
 
-        for (User user : userList){
-
-            if (user.getUserLogin().equalsIgnoreCase(tryUsername)){
-                if (user.getUserPassword().equals(tryPassword)){
+        for (User user : userList) {
+            if (user.getUserLogin().equalsIgnoreCase(tryUsername)) {
+                if (user.getUserPassword().equals(tryPassword)) {
                     loginSuccessful = true;
+                    currentUser = user.getUserLogin();
                 }
             }
         }
-        if (loginSuccessful){
+        if (loginSuccessful) {
             System.out.println("Login successful");
+            System.out.println(currentUser);
         } else {
             System.out.println("Username or password is not correct.");
         }
     }
 
     public static void getUsersFromDb(String url, String username, String password) throws SQLException {
-        Connection connection = DriverManager.getConnection(url,username,password);
+        Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
-        while (resultSet.next()){
-            User user = new User();
-            user.setUserId(resultSet.getInt("userId"));
-            user.setUserLogin(resultSet.getString("userLogin"));
-            user.setUserPassword(resultSet.getString("userPassword"));
-            user.setIsAdmin(resultSet.getInt("isAdmin"));
-            userList.add(user);
+        if (userList.size() > userListComparison.size() || userList.isEmpty()) {
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+            while (resultSet.next()) {
+                User user = new User();
+                user.setUserId(resultSet.getInt("userId"));
+                user.setUserLogin(resultSet.getString("userLogin"));
+                user.setUserPassword(resultSet.getString("userPassword"));
+                user.setIsAdmin(resultSet.getInt("isAdmin"));
+                userList.add(user);
+            }
+            resultSet.close();
         }
-        resultSet.close();
         statement.close();
         connection.close();
     }
 
     public static void userCreation(String url, String username, String password) throws SQLException {
 
-        Connection connection = DriverManager.getConnection(url,username,password);
+        Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
         usernameCreation();
         passwordCreation();
@@ -83,8 +88,8 @@ public class loginSystem {
                 System.out.println("User created successfully!");
                 passwordFit = true;
             } else {
-                System.out.println("Password is not valid, must be at least 8 symbols, contain numbers," +
-                        "lower and capital letters, please try to create a new password again.");
+                System.out.println("Password is not valid, must be at least 8 units, contain numbers," +
+                        "lower, capital letters and symbols, please create a new password.");
             }
         } while (!passwordFit);
     }
@@ -97,6 +102,4 @@ public class loginSystem {
         System.out.println("3. Exit");
         mainClass.selection = Integer.parseInt(scan.next());
     }
-
-
 }

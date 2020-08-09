@@ -1,6 +1,4 @@
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class mainClass {
@@ -19,7 +17,11 @@ public class mainClass {
             }
             else if (selection == 2){
                 loginSystem.getUsersFromDb(url, username, password);
+                loginSystem.userListComparison = loginSystem.userList;
                 loginSystem.loginCheck();
+                if (loginSystem.loginSuccessful){
+                    System.out.println("Welcome, " + loginSystem.currentUser);
+                }
             }
 
         } while (selection!=3);
