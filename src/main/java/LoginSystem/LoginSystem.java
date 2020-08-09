@@ -114,7 +114,7 @@ public class LoginSystem {
     }
 
     private static void passwordCreation() {
-        // create password hashing (at some point lol...)
+        // create password hashing (optional)
         do {
             System.out.println("Create a password");
             createPassword = scan.next();

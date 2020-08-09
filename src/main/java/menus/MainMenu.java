@@ -1,7 +1,6 @@
 package menus;
 
 import LoginSystem.LoginSystem;
-import main.MainClass;
 
 import java.sql.SQLException;
 
