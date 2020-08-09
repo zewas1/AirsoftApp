@@ -9,7 +9,7 @@ public class AdminMenu {
 
     public static void getAdminMenu() throws SQLException {
         do {
-            UserMenu.getMenuSelection();
+            getMenuSelection();
             if (MainClass.menuSelection == 1) {
                 UserMenu.showStats();
             } else if (MainClass.menuSelection == 2) {
@@ -35,5 +35,14 @@ public class AdminMenu {
                 System.out.println("User " + user.userLogin + " selected.");
             }
         }
+    }
+    static void getMenuSelection() {
+        System.out.println("Welcome, " + LoginSystem.currentUser);
+        System.out.println("This is a user menu. Available functions are:");
+        System.out.println("1. Check your stats");
+        System.out.println("2. Calculate KDA");
+        System.out.println("3. Change user stats.");
+        System.out.println("4. exit.");
+        MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
     }
 }

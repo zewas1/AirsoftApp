@@ -133,6 +133,7 @@ public class LoginSystem {
         System.out.println("Welcome to the airsoft data management tool.");
         System.out.println("1. Register a new user");
         System.out.println("2. Login with an already existing user");
+        //System.out.println("3. Show top 5 players");
         System.out.println("3. Exit");
         MainMenu.selection = Integer.parseInt(scan.next());
     }
