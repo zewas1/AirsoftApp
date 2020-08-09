@@ -1,2 +1,3 @@
 1. MAJOR BUG in menu logic. When you log in with an existing user, log out and then create a new user, you cannot use
 him to log in. FIXED
+2. IF database is empty, you can't create a new user. FIXED

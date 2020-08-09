@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import menus.MainMenu;
 
 public class LoginSystem {
@@ -43,10 +44,6 @@ public class LoginSystem {
         }
         if (loginSuccessful) {
             System.out.println("Login successful");
-            System.out.println(currentUser);
-            System.out.println(currentKills);
-            System.out.println(currentAssists);
-            System.out.println(currentDeaths);
         } else {
             System.out.println("Username or password is not correct.");
         }
@@ -89,21 +86,24 @@ public class LoginSystem {
     }
 
     private static void usernameCreation() throws SQLException {
-        // establish username uniqueness
-        do {
-            System.out.println("Create your username");
-            createUsername = scan.next();
-            getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-            for (User user : userList) {
-                if (user.getUserLogin().equalsIgnoreCase(createUsername)) {
-                    System.out.println("This username already exists!");
-                    usernameFit = false;
-                    break;
-                } else {
-                    usernameFit = true;
+        getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
+        System.out.println("Create your username");
+        createUsername = scan.next();
+        if (userList.isEmpty()) {
+            usernameFit = true;
+        } else {
+            do {
+                for (User user : userList) {
+                    if (user.getUserLogin().equalsIgnoreCase(createUsername)) {
+                        System.out.println("This username already exists!");
+                        usernameFit = false;
+                        break;
+                    } else {
+                        usernameFit = true;
+                    }
                 }
-            }
-        } while (!usernameFit);
+            } while (!usernameFit);
+        }
         userList.clear();
         userListComparison.clear();
     }
