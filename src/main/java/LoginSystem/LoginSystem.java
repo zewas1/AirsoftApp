@@ -1,9 +1,12 @@
+package LoginSystem;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import menus.MainMenu;
 
-public class loginSystem {
+public class LoginSystem {
     public static final Scanner scan = new Scanner(System.in);
     private static boolean passwordFit = false;
     public static List<User> userList = new ArrayList<>();
@@ -95,7 +98,7 @@ public class loginSystem {
         do {
             System.out.println("Create a password");
             createPassword = scan.next();
-            if (passwordCheck.isValid(createPassword)) {
+            if (PasswordCheck.isValid(createPassword)) {
                 System.out.println("User created successfully!");
                 passwordFit = true;
             } else {
@@ -111,6 +114,6 @@ public class loginSystem {
         System.out.println("1. Register a new user");
         System.out.println("2. Login with an already existing user");
         System.out.println("3. Exit");
-        mainClass.selection = Integer.parseInt(scan.next());
+        MainMenu.selection = Integer.parseInt(scan.next());
     }
 }

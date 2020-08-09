@@ -1,11 +1,11 @@
 shooting range / airsoft data management application
 
 login system with database: store new users, connect using data in database, password hashing (optional)
-User types and functions:
-1. Unregistered User:
+LoginSystem.User types and functions:
+1. Unregistered LoginSystem.User:
 can register
 view top 5 players (optional)
-2. registered User:
+2. registered LoginSystem.User:
 can participate in "shooting game" and see accuracy // i can see two possible approaches here, either it's gonna be
                                                         random number generator, or typing in a number from 1 to 100
                                                         and based on that we'll calculate accuracy
@@ -14,11 +14,11 @@ can update their personal info (change nickname, change password, change age)
 can create teams and invite other users (optional)
 can accept team invitations and see stats of a team (optional)
 can view top 5 players (optional)
-3. super User:
-all the functions of a regular User
+3. super LoginSystem.User:
+all the functions of a regular LoginSystem.User
 can create new users on the system, even if they are not registered
 can create airsoft game events
-can submit airsoft game data for every User
+can submit airsoft game data for every LoginSystem.User
 
 registration rules:
 username must be unique

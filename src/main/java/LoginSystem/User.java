@@ -1,3 +1,5 @@
+package LoginSystem;
+
 public class User {
     public int userId;
     public int isAdmin;
