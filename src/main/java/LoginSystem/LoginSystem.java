@@ -87,12 +87,12 @@ public class LoginSystem {
 
     private static void usernameCreation() throws SQLException {
         getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-        System.out.println("Create your username");
-        createUsername = scan.next();
         if (userList.isEmpty()) {
+            usernameInput();
             usernameFit = true;
         } else {
             do {
+                usernameInput();
                 for (User user : userList) {
                     if (user.getUserLogin().equalsIgnoreCase(createUsername)) {
                         System.out.println("This username already exists!");
@@ -106,6 +106,11 @@ public class LoginSystem {
         }
         userList.clear();
         userListComparison.clear();
+    }
+
+    private static void usernameInput(){
+        System.out.println("Create your username");
+        createUsername = scan.next();
     }
 
     private static void passwordCreation() {
