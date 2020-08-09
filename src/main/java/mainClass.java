@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.Scanner;
 
+//strategy pattern
+
 public class mainClass {
     public static final Scanner scan = new Scanner(System.in);
     public static int selection = 0;
@@ -13,42 +15,23 @@ public class mainClass {
 
         do {
             loginSystem.getSelection();
-            if (selection == 1){
+            if (selection == 1) {
                 loginSystem.userCreation(url, username, password);
-            }
-            else if (selection == 2){
+            } else if (selection == 2) {
                 loginSystem.getUsersFromDb(url, username, password);
                 loginSystem.userListComparison = loginSystem.userList;
                 loginSystem.loginCheck();
-                if (loginSystem.loginSuccessful && loginSystem.userIsAdmin > 0){
-                    System.out.println("Welcome, " + loginSystem.currentUser);
-                    System.out.println("This is an Admin menu");
-                }
-                else if (loginSystem.loginSuccessful && loginSystem.userIsAdmin == 0){
-                    do {
-                        System.out.println("Welcome, " + loginSystem.currentUser);
-                        System.out.println("This is a user menu. Available functions are:");
-                        System.out.println("1. Check your stats");
-                        System.out.println("2. Calculate KDA");
-                        //System.out.println("3. Play accuracy game.");
-                        System.out.println("3. exit.");
-                        menuSelection = Integer.parseInt(scan.next());
-                        if (menuSelection==1){
-                            System.out.println("Kill count: " + loginSystem.currentKills);
-                            System.out.println("Death count: " + loginSystem.currentDeaths);
-                            System.out.println("Assist count: " + loginSystem.currentAssists);
-                        }
-                        else if (menuSelection==2){
-                            System.out.println("KDA: " + (double)((loginSystem.currentAssists)/2+loginSystem.currentKills)/
-                                    loginSystem.currentDeaths);
-                        }
-                    } while (menuSelection!=3);
-                }
-                else if (!loginSystem.loginSuccessful){
+                if (loginSystem.loginSuccessful) {
+                    if (loginSystem.userIsAdmin>0){
+                        AdminMenu.getAdminMenu();
+                    }
+                    else if (loginSystem.userIsAdmin==0){
+                        UserMenu.getUserMenu();
+                    }
+                } else {
                     System.out.println("Login was unsuccessful.");
                 }
             }
-
-        } while (selection!=3);
+        } while (selection != 3);
     }
 }

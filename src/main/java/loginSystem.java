@@ -17,9 +17,6 @@ public class loginSystem {
     public static int currentAssists = 0;
     public static List<User> userListComparison = new ArrayList<>();
 
-    String tryUsername;
-    String tryPassword;
-
     public static void loginCheck() {
         String tryUsername;
         String tryPassword;
