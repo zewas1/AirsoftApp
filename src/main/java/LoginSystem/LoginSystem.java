@@ -21,6 +21,9 @@ public class LoginSystem {
     public static int currentDeaths = 0;
     public static int currentAssists = 0;
     public static List<User> userListComparison = new ArrayList<>();
+    public static int selectedUserKills = 0;
+    public static int selectedUserDearths = 0;
+    public static int selectedUserAssists = 0;
 
     public static void loginCheck() {
         String tryUsername;
@@ -50,14 +53,13 @@ public class LoginSystem {
     }
 
     public static void dataRefresh() throws SQLException {
+        userList.clear();
+        userListComparison.clear();
         getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-        userListComparison = userList;
         for (User user : userList) {
-            currentUser = user.getUserLogin();
-            userIsAdmin = user.getIsAdmin();
-            currentKills = user.getKillCount();
-            currentAssists = user.getAssistCount();
-            currentDeaths = user.getDeathCount();
+            selectedUserKills = user.getKillCount();
+            selectedUserDearths = user.getDeathCount();
+            selectedUserAssists = user.getAssistCount();
         }
     }
 

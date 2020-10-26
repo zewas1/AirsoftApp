@@ -9,11 +9,12 @@ public class MainMenu {
     public static String username = "root"; //  username
     public static String password = "z_1755a1B!2c,/3Jk"; // password
     public static int selection = 0;
-    private static final int doCreateUser = 1;
-    private static final int doConnectUser = 2;
-    private static final int exitMenu = 3;
 
     public static void getMainMenu() throws SQLException {
+        int doCreateUser = 1;
+        int doConnectUser = 2;
+        int exitMenu = 3;
+
         do {
             LoginSystem.getSelection();
             if (selection == doCreateUser) {

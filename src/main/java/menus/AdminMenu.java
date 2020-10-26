@@ -20,6 +20,7 @@ public class AdminMenu {
     private static String statChangeName = null;
     private static int setStat = 0;
 
+
     public static void getAdminMenu() throws SQLException {
         do {
             getMenuSelection();
@@ -45,9 +46,10 @@ public class AdminMenu {
         selectUser = Integer.parseInt(MainClass.scan.next());
         for (User user : LoginSystem.userList) {
             if (user.getUserId() == selectUser) {
-                System.out.println("User " + user.userLogin + " selected.");
-                showSelectUserStats(user);
                 isValidUserSelected = true;
+                System.out.println("User " + user.userLogin + " selected.");
+                LoginSystem.dataRefresh();
+                showSelectUserStats();
                 specialChangeStats();
             }
         }
@@ -56,12 +58,11 @@ public class AdminMenu {
         }
     }
 
-    private static void showSelectUserStats(User user) throws SQLException {
-        LoginSystem.dataRefresh();
+    private static void showSelectUserStats() throws SQLException {
         System.out.println("Stat info:");
-        System.out.println("Kills: " + user.getKillCount());
-        System.out.println("Deaths: " + user.getDeathCount());
-        System.out.println("Assists: " + user.getAssistCount());
+        System.out.println("Kills: " + LoginSystem.selectedUserKills);
+        System.out.println("Deaths: " + LoginSystem.selectedUserDearths);
+        System.out.println("Assists: " + LoginSystem.selectedUserAssists);
     }
 
     private static void specialChangeStats() throws SQLException {
@@ -94,8 +95,8 @@ public class AdminMenu {
                 System.out.println("How many " + statChangeName + " would you like to set?");
                 setStat = Integer.parseInt(MainClass.scan.next());
                 uploadStatChanges(MainMenu.url, MainMenu.username, MainMenu.password);
-                LoginSystem.getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-                showSelectUserStats(user);
+                LoginSystem.dataRefresh();
+                showSelectUserStats();
             }
         }
     }
