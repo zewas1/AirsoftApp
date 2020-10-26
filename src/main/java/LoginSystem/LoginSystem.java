@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javafx.scene.control.TextFormatter;
 import menus.AdminMenu;
 import menus.MainMenu;
+import menus.SpecialFeatures.ChangeStatsMenu;
 
 public class LoginSystem {
     public static final Scanner scan = new Scanner(System.in);
@@ -148,11 +150,11 @@ public class LoginSystem {
         showDataList.clear();
         showDataListComparison.clear();
         getDataFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-        if (AdminMenu.selectUser == 0) {
-            AdminMenu.selectUser = currentUserId;
+        if (ChangeStatsMenu.selectUser == 0) {
+            ChangeStatsMenu.selectUser = currentUserId;
         }
         for (User user : showDataList) {
-            if (AdminMenu.selectUser == (user.getUserId())) {
+            if (ChangeStatsMenu.selectUser == (user.getUserId())) {
                 selectedUserKills = user.getKillCount();
                 selectedUserDeaths = user.getDeathCount();
                 selectedUserAssists = user.getAssistCount();

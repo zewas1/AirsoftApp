@@ -4,7 +4,6 @@ import LoginSystem.LoginSystem;
 import main.MainClass;
 
 import java.sql.SQLException;
-import java.util.Collections;
 
 public class UserMenu {
 
@@ -22,9 +21,7 @@ public class UserMenu {
                 countKda();
             }
         } while (MainClass.menuSelection != doExitMenu);
-        LoginSystem.loginSuccessful = false;
-        LoginSystem.userList.clear();
-        LoginSystem.userListComparison.clear();
+        userDisconnected();
     }
 
     static void countKda() throws SQLException {
@@ -52,6 +49,11 @@ public class UserMenu {
         } catch (NumberFormatException e){
             System.out.println("Only numbers are allowed.");
         }
+    }
+    public static void userDisconnected() {
+        LoginSystem.loginSuccessful = false;
+        LoginSystem.userList.clear();
+        LoginSystem.userListComparison.clear();
     }
 
 }
