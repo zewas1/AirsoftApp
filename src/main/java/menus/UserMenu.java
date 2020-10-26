@@ -47,7 +47,11 @@ public class UserMenu {
         System.out.println("2. Calculate KDA");
         //System.out.println("3. Play accuracy game.");
         System.out.println("3. exit.");
-        MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
+        try {
+            MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
+        } catch (NumberFormatException e){
+            System.out.println("Only numbers are allowed.");
+        }
     }
 
 }

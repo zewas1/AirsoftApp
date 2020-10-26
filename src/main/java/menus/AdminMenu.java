@@ -42,18 +42,23 @@ public class AdminMenu {
         for (User user : LoginSystem.userList) {
             System.out.println(user.getUserId() + " " + user.getUserLogin());
         }
-        selectUser = Integer.parseInt(MainClass.scan.next());
-        for (User user : LoginSystem.userList) {
-            if (user.getUserId() == selectUser) {
-                isValidUserSelected = true;
-                System.out.println("User " + user.userLogin + " selected.");
-                LoginSystem.dataRefresh();
-                showSelectUserStats();
-                specialChangeStats();
+        try {
+            selectUser = Integer.parseInt(MainClass.scan.next());
+            for (User user : LoginSystem.userList) {
+                if (user.getUserId() == selectUser) {
+                    isValidUserSelected = true;
+                    System.out.println("User " + user.userLogin + " selected.");
+                    LoginSystem.dataRefresh();
+                    showSelectUserStats();
+                    specialChangeStats();
+                }
             }
-        }
-        if (!isValidUserSelected) {
-            System.out.println("Invalid user selection.");
+            if (!isValidUserSelected) {
+                System.out.println("Invalid user selection.");
+            }
+        } catch (NumberFormatException e)
+        {
+            System.out.println("Only numbers are allowed.");
         }
         selectUser = 0;
     }
@@ -138,6 +143,10 @@ public class AdminMenu {
         System.out.println("2. Calculate KDA");
         System.out.println("3. Change user stats.");
         System.out.println("4. exit.");
-        MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
+        try {
+            MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
+        } catch (NumberFormatException e){
+            System.out.println("Only numbers are allowed.");
+        }
     }
 }
