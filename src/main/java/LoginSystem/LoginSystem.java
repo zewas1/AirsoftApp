@@ -14,21 +14,19 @@ public class LoginSystem {
     private static boolean usernameFit = false;
     public static List<User> userList = new ArrayList<>();
     public static List<User> userListComparison = new ArrayList<>();
-    private static List<User> showDataList = new ArrayList<>();
+    public static List<User> showDataList = new ArrayList<>();
     private static List<User> showDataListComparison = new ArrayList<>();
     private static String createUsername;
     private static String createPassword;
     public static boolean loginSuccessful = false;
     public static int userIsAdmin;
     public static String currentUser = null;
-    public static int currentKills = 0;
-    public static int currentDeaths = 0;
-    public static int currentAssists = 0;
     public static int selectedUserKills = 0;
     public static int selectedUserDeaths = 0;
     public static int selectedUserAssists = 0;
+    private static int currentUserId = 0;
 
-    public static void loginCheck() {
+    public static void loginCheck() throws SQLException {
         String tryUsername;
         String tryPassword;
         System.out.println("Please type in your username:");
@@ -42,9 +40,7 @@ public class LoginSystem {
                     loginSuccessful = true;
                     currentUser = user.getUserLogin();
                     userIsAdmin = user.getIsAdmin();
-                    currentKills = user.getKillCount();
-                    currentAssists = user.getAssistCount();
-                    currentDeaths = user.getDeathCount();
+                    currentUserId = user.getUserId();
                 }
             }
         }
@@ -54,6 +50,7 @@ public class LoginSystem {
             System.out.println("Username or password is not correct.");
         }
     }
+
     public static void getUsersFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
@@ -75,7 +72,6 @@ public class LoginSystem {
         }
         connection.close();
     }
-
 
 
     public static void userCreation(String url, String username, String password) throws SQLException {
@@ -148,8 +144,11 @@ public class LoginSystem {
         showDataList.clear();
         showDataListComparison.clear();
         getDataFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
+        if (AdminMenu.selectUser == 0) {
+            AdminMenu.selectUser = currentUserId;
+        }
         for (User user : showDataList) {
-            if (user.getUserId() == AdminMenu.selectUser) {
+            if (AdminMenu.selectUser == (user.getUserId())) {
                 selectedUserKills = user.getKillCount();
                 selectedUserDeaths = user.getDeathCount();
                 selectedUserAssists = user.getAssistCount();

@@ -20,7 +20,6 @@ public class AdminMenu {
     private static String statChangeName = null;
     private static int setStat = 0;
 
-
     public static void getAdminMenu() throws SQLException {
         do {
             getMenuSelection();
@@ -56,9 +55,10 @@ public class AdminMenu {
         if (!isValidUserSelected) {
             System.out.println("Invalid user selection.");
         }
+        selectUser = 0;
     }
 
-    private static void showSelectUserStats(){
+    private static void showSelectUserStats() {
         System.out.println("Stat info:");
         System.out.println("Kills: " + LoginSystem.selectedUserKills);
         System.out.println("Deaths: " + LoginSystem.selectedUserDeaths);

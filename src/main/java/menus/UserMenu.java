@@ -4,6 +4,7 @@ import LoginSystem.LoginSystem;
 import main.MainClass;
 
 import java.sql.SQLException;
+import java.util.Collections;
 
 public class UserMenu {
 
@@ -26,15 +27,17 @@ public class UserMenu {
         LoginSystem.userListComparison.clear();
     }
 
-    static void countKda() {
-        System.out.println("KDA: " + (double) ((LoginSystem.currentAssists) / 2 + LoginSystem.currentKills) /
-                LoginSystem.currentDeaths);
+    static void countKda() throws SQLException {
+        LoginSystem.dataRefresh();
+        System.out.println("KDA: " + (double) ((LoginSystem.selectedUserAssists) / 2 + LoginSystem.selectedUserKills) /
+                LoginSystem.selectedUserDeaths);
     }
 
     static void showMyStats() throws SQLException {
-        System.out.println("Kill count: " + LoginSystem.currentKills);
-        System.out.println("Death count: " + LoginSystem.currentDeaths);
-        System.out.println("Assist count: " + LoginSystem.currentAssists);
+        LoginSystem.dataRefresh();
+        System.out.println("Kill count: " + LoginSystem.selectedUserKills);
+        System.out.println("Death count: " + LoginSystem.selectedUserDeaths);
+        System.out.println("Assist count: " + LoginSystem.selectedUserAssists);
     }
 
     private static void getMenuSelection() {
@@ -46,4 +49,5 @@ public class UserMenu {
         System.out.println("3. exit.");
         MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
     }
+
 }
