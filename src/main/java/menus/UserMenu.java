@@ -3,15 +3,21 @@ import LoginSystem.LoginSystem;
 import main.MainClass;
 
 public class UserMenu {
+
+    private static final int doShowStats = 1;
+    private static final int doCountKda = 2;
+    private static final int doExitMenu = 3;
+
+
     public static void getUserMenu() {
         do {
             getMenuSelection();
-            if (MainClass.menuSelection == 1) {
+            if (MainClass.menuSelection == doShowStats) {
                 showStats();
-            } else if (MainClass.menuSelection == 2) {
+            } else if (MainClass.menuSelection == doCountKda) {
                 countKda();
             }
-        } while (MainClass.menuSelection != 3);
+        } while (MainClass.menuSelection != doExitMenu);
         LoginSystem.loginSuccessful = false;
         LoginSystem.userList.clear();
         LoginSystem.userListComparison.clear();
@@ -28,7 +34,7 @@ public class UserMenu {
         System.out.println("Assist count: " + LoginSystem.currentAssists);
     }
 
-    static void getMenuSelection() {
+    private static void getMenuSelection() {
         System.out.println("Welcome, " + LoginSystem.currentUser);
         System.out.println("This is a user menu. Available functions are:");
         System.out.println("1. Check your stats");

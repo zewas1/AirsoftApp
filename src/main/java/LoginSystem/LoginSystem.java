@@ -67,8 +67,8 @@ public class LoginSystem {
                 userList.add(user);
             }
             resultSet.close();
+            statement.close();
         }
-        statement.close();
         connection.close();
     }
 
