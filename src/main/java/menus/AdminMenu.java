@@ -1,4 +1,5 @@
 package menus;
+
 import LoginSystem.LoginSystem;
 import main.MainClass;
 import LoginSystem.User;
@@ -23,10 +24,10 @@ public class AdminMenu {
         do {
             getMenuSelection();
             if (MainClass.menuSelection == doShowStats) {
-                UserMenu.showStats();
+                UserMenu.showMyStats();
             } else if (MainClass.menuSelection == doCountKda) {
                 UserMenu.countKda();
-            } else if (MainClass.menuSelection == doChangeUserStats){
+            } else if (MainClass.menuSelection == doChangeUserStats) {
                 specialSelectUser();
             }
         } while (MainClass.menuSelection != doExitMenu);
@@ -39,19 +40,28 @@ public class AdminMenu {
         LoginSystem.getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
         System.out.println("Select user by ID");
         for (User user : LoginSystem.userList) {
-            System.out.println(user.getUserId()+ " " + user.getUserLogin());
+            System.out.println(user.getUserId() + " " + user.getUserLogin());
         }
         selectUser = Integer.parseInt(MainClass.scan.next());
         for (User user : LoginSystem.userList) {
-            if (user.getUserId() == selectUser){
+            if (user.getUserId() == selectUser) {
                 System.out.println("User " + user.userLogin + " selected.");
+                showSelectUserStats(user);
                 isValidUserSelected = true;
                 specialChangeStats();
             }
         }
-        if (!isValidUserSelected){
+        if (!isValidUserSelected) {
             System.out.println("Invalid user selection.");
         }
+    }
+
+    private static void showSelectUserStats(User user) throws SQLException {
+        LoginSystem.dataRefresh();
+        System.out.println("Stat info:");
+        System.out.println("Kills: " + user.getKillCount());
+        System.out.println("Deaths: " + user.getDeathCount());
+        System.out.println("Assists: " + user.getAssistCount());
     }
 
     private static void specialChangeStats() throws SQLException {
@@ -64,33 +74,33 @@ public class AdminMenu {
         do {
             specialChangeStatsMenu();
             getSelectStatChange = Integer.parseInt(MainClass.scan.next());
-            if (getSelectStatChange==changeKillCount){
+            if (getSelectStatChange == changeKillCount) {
                 statChangeName = "kills";
                 specialChangeStat();
-            }
-            else if (getSelectStatChange == changeDeathCount){
+            } else if (getSelectStatChange == changeDeathCount) {
                 statChangeName = "deaths";
                 specialChangeStat();
-            }
-            else if (getSelectStatChange == changeAssistCount){
+            } else if (getSelectStatChange == changeAssistCount) {
                 statChangeName = "assists";
                 specialChangeStat();
             }
 
-        } while (getSelectStatChange!=exitChangeStats);
+        } while (getSelectStatChange != exitChangeStats);
     }
 
     private static void specialChangeStat() throws SQLException {
         for (User user : LoginSystem.userList) {
-            if (user.getUserId() == selectUser){
-                System.out.println("How many" + statChangeName + "would you like to set?");
+            if (user.getUserId() == selectUser) {
+                System.out.println("How many " + statChangeName + " would you like to set?");
                 setStat = Integer.parseInt(MainClass.scan.next());
-                uploadStatChanges(MainMenu.url,MainMenu.username,MainMenu.password);
+                uploadStatChanges(MainMenu.url, MainMenu.username, MainMenu.password);
+                LoginSystem.getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
+                showSelectUserStats(user);
             }
         }
     }
 
-    private static void uploadStatChanges (String url, String username, String password) throws SQLException {
+    private static void uploadStatChanges(String url, String username, String password) throws SQLException {
         String uploadField = null;
         switch (statChangeName) {
             case "kills":
@@ -106,14 +116,13 @@ public class AdminMenu {
 
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
-        String sqlString = "UPDATE `users` SET `"+uploadField+"` ='"+setStat+"' WHERE `userId` = '"+selectUser+"'";
+        String sqlString = "UPDATE `users` SET `" + uploadField + "` ='" + setStat + "' WHERE `userId` = '" + selectUser + "'";
         statement.executeUpdate(sqlString);
         statement.close();
         connection.close();
     }
 
-    private static void specialChangeStatsMenu(){
-        UserMenu.showStats();
+    private static void specialChangeStatsMenu() {
         System.out.println("What stats would you like to change?");
         System.out.println("1. Kill count.");
         System.out.println("2. Death count.");

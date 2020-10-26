@@ -49,6 +49,18 @@ public class LoginSystem {
         }
     }
 
+    public static void dataRefresh() throws SQLException {
+        getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
+        userListComparison = userList;
+        for (User user : userList) {
+            currentUser = user.getUserLogin();
+            userIsAdmin = user.getIsAdmin();
+            currentKills = user.getKillCount();
+            currentAssists = user.getAssistCount();
+            currentDeaths = user.getDeathCount();
+        }
+    }
+
     public static void getUsersFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
@@ -108,7 +120,7 @@ public class LoginSystem {
         userListComparison.clear();
     }
 
-    private static void usernameInput(){
+    private static void usernameInput() {
         System.out.println("Create your username");
         createUsername = scan.next();
     }

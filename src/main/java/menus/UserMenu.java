@@ -1,6 +1,9 @@
 package menus;
+
 import LoginSystem.LoginSystem;
 import main.MainClass;
+
+import java.sql.SQLException;
 
 public class UserMenu {
 
@@ -9,11 +12,11 @@ public class UserMenu {
     private static final int doExitMenu = 3;
 
 
-    public static void getUserMenu() {
+    public static void getUserMenu() throws SQLException {
         do {
             getMenuSelection();
             if (MainClass.menuSelection == doShowStats) {
-                showStats();
+                showMyStats();
             } else if (MainClass.menuSelection == doCountKda) {
                 countKda();
             }
@@ -28,7 +31,7 @@ public class UserMenu {
                 LoginSystem.currentDeaths);
     }
 
-    static void showStats() {
+    static void showMyStats() throws SQLException {
         System.out.println("Kill count: " + LoginSystem.currentKills);
         System.out.println("Death count: " + LoginSystem.currentDeaths);
         System.out.println("Assist count: " + LoginSystem.currentAssists);
