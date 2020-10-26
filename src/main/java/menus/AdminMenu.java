@@ -58,10 +58,10 @@ public class AdminMenu {
         }
     }
 
-    private static void showSelectUserStats() throws SQLException {
+    private static void showSelectUserStats(){
         System.out.println("Stat info:");
         System.out.println("Kills: " + LoginSystem.selectedUserKills);
-        System.out.println("Deaths: " + LoginSystem.selectedUserDearths);
+        System.out.println("Deaths: " + LoginSystem.selectedUserDeaths);
         System.out.println("Assists: " + LoginSystem.selectedUserAssists);
     }
 

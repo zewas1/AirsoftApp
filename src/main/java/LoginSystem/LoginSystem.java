@@ -149,10 +149,11 @@ public class LoginSystem {
         showDataListComparison.clear();
         getDataFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
         for (User user : showDataList) {
-            if (user.getUserId() == AdminMenu.selectUser)
-            selectedUserKills = user.getKillCount();
-            selectedUserDeaths = user.getDeathCount();
-            selectedUserAssists = user.getAssistCount();
+            if (user.getUserId() == AdminMenu.selectUser) {
+                selectedUserKills = user.getKillCount();
+                selectedUserDeaths = user.getDeathCount();
+                selectedUserAssists = user.getAssistCount();
+            }
         }
     }
 
