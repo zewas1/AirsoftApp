@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import menus.AdminMenu;
 import menus.MainMenu;
 
 public class LoginSystem {
@@ -12,6 +13,9 @@ public class LoginSystem {
     private static boolean passwordFit = false;
     private static boolean usernameFit = false;
     public static List<User> userList = new ArrayList<>();
+    public static List<User> userListComparison = new ArrayList<>();
+    private static List<User> showDataList = new ArrayList<>();
+    private static List<User> showDataListComparison = new ArrayList<>();
     private static String createUsername;
     private static String createPassword;
     public static boolean loginSuccessful = false;
@@ -20,9 +24,8 @@ public class LoginSystem {
     public static int currentKills = 0;
     public static int currentDeaths = 0;
     public static int currentAssists = 0;
-    public static List<User> userListComparison = new ArrayList<>();
     public static int selectedUserKills = 0;
-    public static int selectedUserDearths = 0;
+    public static int selectedUserDeaths = 0;
     public static int selectedUserAssists = 0;
 
     public static void loginCheck() {
@@ -51,23 +54,10 @@ public class LoginSystem {
             System.out.println("Username or password is not correct.");
         }
     }
-
-    public static void dataRefresh() throws SQLException {
-        userList.clear();
-        userListComparison.clear();
-        getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-        for (User user : userList) {
-            selectedUserKills = user.getKillCount();
-            selectedUserDearths = user.getDeathCount();
-            selectedUserAssists = user.getAssistCount();
-        }
-    }
-
     public static void getUsersFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
         if (userList.size() > userListComparison.size() || userList.isEmpty()) {
-
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
             while (resultSet.next()) {
                 User user = new User();
@@ -85,6 +75,8 @@ public class LoginSystem {
         }
         connection.close();
     }
+
+
 
     public static void userCreation(String url, String username, String password) throws SQLException {
 
@@ -150,5 +142,39 @@ public class LoginSystem {
         //System.out.println("3. Show top 5 players");
         System.out.println("3. Exit");
         MainMenu.selection = Integer.parseInt(scan.next());
+    }
+
+    public static void dataRefresh() throws SQLException {
+        showDataList.clear();
+        showDataListComparison.clear();
+        getDataFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
+        for (User user : showDataList) {
+            if (user.getUserId() == AdminMenu.selectUser)
+            selectedUserKills = user.getKillCount();
+            selectedUserDeaths = user.getDeathCount();
+            selectedUserAssists = user.getAssistCount();
+        }
+    }
+
+    public static void getDataFromDb(String url, String username, String password) throws SQLException {
+        Connection connection = DriverManager.getConnection(url, username, password);
+        Statement statement = connection.createStatement();
+        if (showDataList.size() > showDataListComparison.size() || showDataList.isEmpty()) {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+            while (resultSet.next()) {
+                User user = new User();
+                user.setUserId(resultSet.getInt("userId"));
+                user.setUserLogin(resultSet.getString("userLogin"));
+                user.setUserPassword(resultSet.getString("userPassword"));
+                user.setIsAdmin(resultSet.getInt("isAdmin"));
+                user.setKillCount(resultSet.getInt("killCount"));
+                user.setDeathCount(resultSet.getInt("deathCount"));
+                user.setAssistCount(resultSet.getInt("assistCount"));
+                showDataList.add(user);
+            }
+            resultSet.close();
+            statement.close();
+        }
+        connection.close();
     }
 }

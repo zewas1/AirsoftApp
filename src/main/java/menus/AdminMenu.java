@@ -16,7 +16,7 @@ public class AdminMenu {
     private static final int doChangeUserStats = 3;
     private static final int doExitMenu = 4;
     private static boolean isValidUserSelected = false;
-    private static int selectUser = 0;
+    public static int selectUser = 0;
     private static String statChangeName = null;
     private static int setStat = 0;
 
