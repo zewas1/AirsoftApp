@@ -1,9 +1,10 @@
 package menus.SpecialFeatures;
 
 import LoginSystem.LoginSystem;
+import LoginSystem.DataRefresh.DataRefresh;
+import LoginSystem.User;
 import main.MainClass;
 import menus.MainMenu;
-import LoginSystem.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,7 +39,7 @@ public class ChangeStatsMenu {
                 if (user.getUserId() == selectUser) {
                     isValidUserSelected = true;
                     System.out.println("User " + user.userLogin + " selected.");
-                    LoginSystem.dataRefresh();
+                    DataRefresh.dataRefresh();
                     showSelectUserStats();
                     specialChangeStats();
                 }
@@ -59,7 +60,7 @@ public class ChangeStatsMenu {
                 setStat = Integer.parseInt(MainClass.scan.next());
                 setUploadField();
                 uploadStatChanges(MainMenu.url, MainMenu.username, MainMenu.password);
-                LoginSystem.dataRefresh();
+                DataRefresh.dataRefresh();
                 showSelectUserStats();
             }
         }
@@ -114,9 +115,8 @@ public class ChangeStatsMenu {
 
     private static void showSelectUserStats() {
         System.out.println("Stat info:");
-        System.out.println("Kills: " + LoginSystem.selectedUserKills);
-        System.out.println("Deaths: " + LoginSystem.selectedUserDeaths);
-        System.out.println("Assists: " + LoginSystem.selectedUserAssists);
+        System.out.println("Kills: " + DataRefresh.selectedUserKills);
+        System.out.println("Deaths: " + DataRefresh.selectedUserDeaths);
+        System.out.println("Assists: " + DataRefresh.selectedUserAssists);
     }
-    
 }

@@ -1,5 +1,6 @@
 package menus;
 
+import LoginSystem.DataRefresh.DataRefresh;
 import LoginSystem.LoginSystem;
 import main.MainClass;
 
@@ -25,16 +26,16 @@ public class UserMenu {
     }
 
     static void countKda() throws SQLException {
-        LoginSystem.dataRefresh();
-        System.out.println("KDA: " + (double) ((LoginSystem.selectedUserAssists) / 2 + LoginSystem.selectedUserKills) /
-                LoginSystem.selectedUserDeaths);
+        DataRefresh.dataRefresh();
+        System.out.println("KDA: " + (double) ((DataRefresh.selectedUserAssists) / 2 + DataRefresh.selectedUserKills) /
+                DataRefresh.selectedUserDeaths);
     }
 
     static void showMyStats() throws SQLException {
-        LoginSystem.dataRefresh();
-        System.out.println("Kill count: " + LoginSystem.selectedUserKills);
-        System.out.println("Death count: " + LoginSystem.selectedUserDeaths);
-        System.out.println("Assist count: " + LoginSystem.selectedUserAssists);
+        DataRefresh.dataRefresh();
+        System.out.println("Kill count: " + DataRefresh.selectedUserKills);
+        System.out.println("Death count: " + DataRefresh.selectedUserDeaths);
+        System.out.println("Assist count: " + DataRefresh.selectedUserAssists);
     }
 
     private static void getMenuSelection() {

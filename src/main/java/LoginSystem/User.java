@@ -1,6 +1,6 @@
 package LoginSystem;
 
-public class User {
+public class User implements Comparable<User> {
     public int userId;
     public int isAdmin;
     public String userLogin;
@@ -63,5 +63,10 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return 0;
     }
 }
