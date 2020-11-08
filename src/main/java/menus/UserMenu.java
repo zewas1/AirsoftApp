@@ -1,8 +1,9 @@
 package menus;
 
-import LoginSystem.DataRefresh.DataRefresh;
+import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.LoginSystem;
 import main.MainClass;
+import menus.SpecialFeatures.EventMenu;
 
 import java.sql.SQLException;
 
@@ -10,8 +11,8 @@ public class UserMenu {
 
     private static final int doShowStats = 1;
     private static final int doCountKda = 2;
-    private static final int doExitMenu = 3;
-
+    private static final int dojoinCurrentEvents = 3;
+    private static final int doExitMenu = 4;
 
     public static void getUserMenu() throws SQLException {
         do {
@@ -20,6 +21,8 @@ public class UserMenu {
                 showMyStats();
             } else if (MainClass.menuSelection == doCountKda) {
                 countKda();
+            } else if (MainClass.menuSelection == dojoinCurrentEvents) {
+                joinCurrentEvents();
             }
         } while (MainClass.menuSelection != doExitMenu);
         userDisconnected();
@@ -43,18 +46,20 @@ public class UserMenu {
         System.out.println("This is a user menu. Available functions are:");
         System.out.println("1. Check your stats");
         System.out.println("2. Calculate KDA");
-        //System.out.println("3. Play accuracy game.");
-        System.out.println("3. exit.");
+        System.out.println("3. Join on-going events.");
+        System.out.println("4. Exit.");
         try {
             MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
         } catch (NumberFormatException e){
             System.out.println("Only numbers are allowed.");
         }
     }
+    public static void joinCurrentEvents() throws SQLException {
+        EventMenu.currentUserSelection();
+    }
     public static void userDisconnected() {
         LoginSystem.loginSuccessful = false;
         LoginSystem.userList.clear();
         LoginSystem.userListComparison.clear();
     }
-
 }

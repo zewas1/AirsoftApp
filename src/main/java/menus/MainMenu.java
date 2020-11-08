@@ -2,8 +2,7 @@ package menus;
 
 import LoginSystem.LoginSystem;
 import LoginSystem.UserCreation;
-import LoginSystem.DataRefresh.DataRefresh;
-import menus.SpecialFeatures.TopFiveMenu;
+import LoginSystem.Utilities.DataRefresh;
 
 import java.sql.SQLException;
 
@@ -16,8 +15,8 @@ public class MainMenu {
     public static void getMainMenu() throws SQLException {
         int doCreateUser = 1;
         int doConnectUser = 2;
-        int showTopFive = 3;
-        int exitMenu = 4;
+        //int showTopFive = 3;
+        int exitMenu = 3;
 
         do {
             LoginSystem.getSelection();
@@ -37,9 +36,9 @@ public class MainMenu {
                 } else {
                     System.out.println("Login was unsuccessful.");
                 }
-            } else if (selection == showTopFive){
+            } /*else if (selection == showTopFive){
                 TopFiveMenu.topFivePlayers();
-            }
+            }*/
         } while (selection != exitMenu);
     }
 }

@@ -1,8 +1,8 @@
 package menus.SpecialFeatures;
 
 import LoginSystem.LoginSystem;
-import LoginSystem.DataRefresh.DataRefresh;
-import LoginSystem.User;
+import LoginSystem.Utilities.DataRefresh;
+import LoginSystem.Objects.User;
 import main.MainClass;
 import menus.MainMenu;
 

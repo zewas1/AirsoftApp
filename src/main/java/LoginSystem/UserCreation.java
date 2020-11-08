@@ -1,5 +1,6 @@
 package LoginSystem;
 
+import LoginSystem.Objects.User;
 import menus.MainMenu;
 
 import java.sql.Connection;
@@ -62,7 +63,7 @@ public class UserCreation {
                 System.out.println("User created successfully!");
                 passwordFit = true;
             } else {
-                System.out.println("Password is not valid, must be at least 8 units, contain numbers," +
+                System.out.println("Password is not valid, must be at least 8 symbols, contain numbers," +
                         "lower, capital letters and symbols, please create a new password.");
             }
         } while (!passwordFit);

@@ -1,4 +1,4 @@
-package LoginSystem;
+package LoginSystem.Objects;
 
 public class User implements Comparable<User> {
     public int userId;

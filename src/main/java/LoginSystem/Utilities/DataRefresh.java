@@ -1,6 +1,6 @@
-package LoginSystem.DataRefresh;
+package LoginSystem.Utilities;
 
-import LoginSystem.User;
+import LoginSystem.Objects.User;
 import menus.MainMenu;
 import menus.SpecialFeatures.ChangeStatsMenu;
 
