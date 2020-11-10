@@ -16,8 +16,7 @@ import java.util.List;
 public class EventEditingMenu {
 
     public static int selectEvent = 0;
-    public static boolean eventStatusValidation = false;
-    public static int eventStatusConst = 1;
+    public static boolean eventStatusConst = true;
     public static List<EventDetails> eventDetailList = new ArrayList<>();
     public static List<EventDetails> eventDetailListComparison = new ArrayList<>();
 
@@ -32,15 +31,19 @@ public class EventEditingMenu {
             getEventEditSelection = Integer.parseInt(MainClass.scan.next());
             if (getEventEditSelection == seeParticipatingPlayers) {
                 showParticipantList();
-                eventDetailList.clear();
-                eventDetailListComparison.clear();
             } else if (getEventEditSelection == changeEventStatus) {
-                changeEventStatus();
+                eventStatusChange(MainMenu.url, MainMenu.username, MainMenu.password);
             }
         } while (getEventEditSelection != quitEventEditMenu);
     }
 
+    static void clearEventListCache() {
+        eventDetailList.clear();
+        eventDetailListComparison.clear();
+    }
+
     private static void eventEditMenu(){
+        clearEventListCache();
         System.out.println("1. See participating player list.");
         System.out.println("2. Change event status.");
         System.out.println("3. Exit.");
@@ -75,12 +78,6 @@ public class EventEditingMenu {
         connection.close();
     }
 
-    private static void changeEventStatus() throws SQLException {
-        EventMenu.getEventsFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-        eventStatusValidation = true;
-        EventEditingSelection();
-    }
-
     public static void EventEditingSelection() throws SQLException {
         boolean isValidEventSelected = false;
         eventSelectionList();
@@ -90,20 +87,17 @@ public class EventEditingMenu {
                 if (event.getId() == selectEvent && AdminMenu.adminInputValidation) {
                     isValidEventSelected = true;
                     System.out.println("Event " + event.getId() + " selected.");
+                    if (event.getIsActive()){
+                        eventStatusConst = false;
+                    } else if (!event.getIsActive()){
+                        eventStatusConst = true;
+                    }
                     eventEdit();
                 } else if (event.getId() == selectEvent && event.getIsActive() && UserMenu.userInputValidation){
                     isValidEventSelected = true;
                     System.out.println("Event " + event.getId() + " selected.");
                     newParticipantUpload(MainMenu.url, MainMenu.username, MainMenu.password);
                     selectEvent = 0;
-                } else if (event.getId() == selectEvent && eventStatusValidation){
-                    if (event.getIsActive()){
-                        eventStatusConst = 0;
-                        eventStatusChange(MainMenu.url, MainMenu.username, MainMenu.password);
-                    } else if (!event.getIsActive()){
-                        eventStatusConst = 1;
-                        eventStatusChange(MainMenu.url, MainMenu.username, MainMenu.password);
-                    }
                 }
             }
             if (!isValidEventSelected && UserMenu.userInputValidation){
@@ -122,7 +116,7 @@ public class EventEditingMenu {
     static void eventStatusChange(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
-        String sqlString = "UPDATE `events` SET isActive = '" + EventEditingMenu.eventStatusConst +"' WHERE id = '"+selectEvent+"');";
+        String sqlString = "update events set isActive = " + eventStatusConst +" WHERE id ="+selectEvent+";";
         statement.executeUpdate(sqlString);
         statement.close();
         connection.close();

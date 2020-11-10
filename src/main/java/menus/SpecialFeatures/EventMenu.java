@@ -29,6 +29,7 @@ public class EventMenu {
     }
 
     private static void getCreateEventMenu() {
+        eventListCacheClear();
         System.out.println("Please choose one of the available options:");
         System.out.println("1. Create a new event.");
         System.out.println("2. Check created events.");
@@ -47,6 +48,10 @@ public class EventMenu {
         statement.executeUpdate(sqlString);
         statement.close();
         connection.close();
+    }
+    static void eventListCacheClear (){
+        eventList.clear();
+        eventListComparison.clear();
     }
 
 
