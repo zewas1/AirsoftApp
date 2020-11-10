@@ -3,7 +3,6 @@ package menus.SpecialFeatures;
 import LoginSystem.LoginSystem;
 import LoginSystem.Objects.Event;
 import LoginSystem.Objects.EventDetails;
-import LoginSystem.Objects.User;
 import LoginSystem.Utilities.DataRefresh;
 import main.MainClass;
 import menus.AdminMenu;
