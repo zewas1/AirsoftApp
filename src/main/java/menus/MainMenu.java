@@ -27,7 +27,7 @@ public class MainMenu {
                 LoginSystem.userListComparison = LoginSystem.userList;
                 LoginSystem.loginCheck();
                 if (LoginSystem.loginSuccessful) {
-                    DataRefresh.dataRefresh();
+                    DataRefresh.statRefresh();
                     if (LoginSystem.userIsAdmin > 0) {
                         AdminMenu.getAdminMenu();
                     } else if (LoginSystem.userIsAdmin == 0) {

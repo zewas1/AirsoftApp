@@ -39,7 +39,7 @@ public class ChangeStatsMenu {
                 if (user.getUserId() == selectUser) {
                     isValidUserSelected = true;
                     System.out.println("User " + user.userLogin + " selected.");
-                    DataRefresh.dataRefresh();
+                    DataRefresh.statRefresh();
                     showSelectUserStats();
                     specialChangeStats();
                 }
@@ -60,7 +60,7 @@ public class ChangeStatsMenu {
                 setStat = Integer.parseInt(MainClass.scan.next());
                 setUploadField();
                 uploadStatChanges(MainMenu.url, MainMenu.username, MainMenu.password);
-                DataRefresh.dataRefresh();
+                DataRefresh.statRefresh();
                 showSelectUserStats();
             }
         }

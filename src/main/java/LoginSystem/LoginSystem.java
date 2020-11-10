@@ -8,7 +8,6 @@ import java.util.Scanner;
 import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.Objects.User;
 import menus.MainMenu;
-import menus.SpecialFeatures.EventMenu;
 
 public class LoginSystem {
     public static final Scanner scan = new Scanner(System.in);

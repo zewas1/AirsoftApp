@@ -1,5 +1,6 @@
 package LoginSystem.Utilities;
 
+import LoginSystem.LoginSystem;
 import LoginSystem.Objects.User;
 import menus.MainMenu;
 import menus.SpecialFeatures.ChangeStatsMenu;
@@ -16,7 +17,7 @@ public class DataRefresh {
     public static int selectedUserDeaths = 0;
     public static int selectedUserAssists = 0;
 
-    public static void dataRefresh() throws SQLException {
+    public static void statRefresh() throws SQLException {
         showDataList.clear();
         showDataListComparison.clear();
         getDataFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
@@ -52,5 +53,10 @@ public class DataRefresh {
             statement.close();
         }
         connection.close();
+    }
+
+    public static void userListRefresh() {
+        LoginSystem.userList.clear();
+        LoginSystem.userListComparison.clear();
     }
 }
