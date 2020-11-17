@@ -10,3 +10,4 @@ him to log in. FIXED
  4.4. Add a case that if there are no participating players, a ‘no players are participating’ or smth like this would be written. Instead of nothingnesssssssssss!
  4.5. Inactive events should not be shown for simple users. At least not until high scores or event/match history is implemented.
 5. Review password limits. Minimum 8 symbols, max x? Bonus dev points if password symbol limit is mentioned only once the limit is breached. (ex.: password kiskiakopusteliaudamasiS1! ends up in error)
+6. (Discussed) - Dissallow users of joining the same event multiple times. It allows user to do so (seen from admin menu/event/participating users as well), even if after a logout/exit & login the user remains active in the event only once.
