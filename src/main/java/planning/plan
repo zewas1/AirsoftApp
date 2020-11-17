@@ -33,3 +33,7 @@ username, accuracy in "shooting game", event participation count, kills total, d
 (note to self, TOP 5 players could be filtered by various factors. KDA score, most participated events, most kills etc.)
 
 if possible look into possibility of checking if mysql tables are already created, if not, make a class to create necessary tables to run the application correctly.
+
+show how many players are registered to participate in events.
+show event name / registration deadline time.
+disallow registrations after event deadline.
