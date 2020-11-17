@@ -18,6 +18,10 @@ public class ChangeStatsMenu {
     private static String uploadField = null;
     public static int selectUser = 0;
     private static String statChangeName = null;
+    private static final int changeKillCount = 1;
+    private static final int changeDeathCount = 2;
+    private static final int changeAssistCount = 3;
+    private static final int exitChangeStats = 4;
 
     private static void specialChangeStatsMenu() {
         System.out.println("What stats would you like to change?");
@@ -58,7 +62,6 @@ public class ChangeStatsMenu {
             if (user.getUserId() == selectUser) {
                 System.out.println("How many " + statChangeName + " would you like to set?");
                 setStat = Integer.parseInt(MainClass.scan.next());
-                setUploadField();
                 uploadStatChanges(MainMenu.url, MainMenu.username, MainMenu.password);
                 DataRefresh.statRefresh();
                 showSelectUserStats();
@@ -68,40 +71,32 @@ public class ChangeStatsMenu {
 
     private static void specialChangeStats() throws SQLException {
         int getSelectStatChange;
-        int changeKillCount = 1;
-        int changeDeathCount = 2;
-        int changeAssistCount = 3;
-        int exitChangeStats = 4;
 
         do {
             specialChangeStatsMenu();
             getSelectStatChange = Integer.parseInt(MainClass.scan.next());
-            if (getSelectStatChange == changeKillCount) {
-                statChangeName = "kills";
-                specialChangeStat();
-            } else if (getSelectStatChange == changeDeathCount) {
-                statChangeName = "deaths";
-                specialChangeStat();
-            } else if (getSelectStatChange == changeAssistCount) {
-                statChangeName = "assists";
-                specialChangeStat();
+            switch (getSelectStatChange) {
+                case changeKillCount:
+                    uploadField = "killCount";
+                    statChangeName = "kills";
+                    specialChangeStat();
+                    break;
+                case changeDeathCount:
+                    uploadField = "deathCount";
+                    statChangeName = "deaths";
+                    specialChangeStat();
+                    break;
+                case changeAssistCount:
+                    uploadField = "assistCount";
+                    statChangeName = "assists";
+                    specialChangeStat();
+                    break;
+                default:
+                    System.out.println("No such menu option.");
+                    specialChangeStatsMenu();
+                    break;
             }
-
         } while (getSelectStatChange != exitChangeStats);
-    }
-
-    private static void setUploadField() {
-        switch (statChangeName) {
-            case "kills":
-                uploadField = "killCount";
-                break;
-            case "deaths":
-                uploadField = "deathCount";
-                break;
-            case "assists":
-                uploadField = "assistCount";
-                break;
-        }
     }
 
     private static void uploadStatChanges(String url, String username, String password) throws SQLException {

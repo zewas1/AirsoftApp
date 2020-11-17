@@ -19,14 +19,22 @@ public class UserMenu {
     public static void getUserMenu() throws SQLException {
         do {
             getMenuSelection();
-            if (MainClass.menuSelection == doShowStats) {
-                showMyStats();
-            } else if (MainClass.menuSelection == doCountKda) {
-                countKda();
-            } else if (MainClass.menuSelection == dojoinCurrentEvents) {
-                userInputValidation = true;
-                joinCurrentEvents();
-                userInputValidation = false;
+            switch (MainClass.menuSelection) {
+                case doShowStats:
+                    showMyStats();
+                    break;
+                case doCountKda:
+                    countKda();
+                    break;
+                case dojoinCurrentEvents:
+                    userInputValidation = true;
+                    joinCurrentEvents();
+                    userInputValidation = false;
+                    break;
+                default :
+                    System.out.println("No such menu option.");
+                    getMenuSelection();
+                    break;
             }
         } while (MainClass.menuSelection != doExitMenu);
         userDisconnected();
@@ -60,7 +68,7 @@ public class UserMenu {
     }
     public static void joinCurrentEvents() throws SQLException {
         EventEditingMenu.EventEditingSelection();
-        EventEditingMenu.clearEventListCache();
+        EventMenu.eventListCacheClear();
     }
     public static void userDisconnected() {
         LoginSystem.loginSuccessful = false;
@@ -68,6 +76,4 @@ public class UserMenu {
         EventMenu.eventList.clear();
         EventMenu.eventListComparison.clear();
     }
-
-
 }

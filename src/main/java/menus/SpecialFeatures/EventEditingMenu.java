@@ -19,25 +19,32 @@ public class EventEditingMenu {
     public static boolean eventStatusConst = true;
     public static List<EventDetails> eventDetailList = new ArrayList<>();
     public static List<EventDetails> eventDetailListComparison = new ArrayList<>();
+    private static final int seeParticipatingPlayers = 1;
+    private static final int changeEventStatus = 2;
+    private static final int quitEventEditMenu = 3;
 
     private static void eventEdit() throws SQLException {
         int getEventEditSelection;
-        int seeParticipatingPlayers = 1;
-        int changeEventStatus = 2;
-        int quitEventEditMenu = 3;
 
         do {
             eventEditMenu();
             getEventEditSelection = Integer.parseInt(MainClass.scan.next());
-            if (getEventEditSelection == seeParticipatingPlayers) {
-                showParticipantList();
-            } else if (getEventEditSelection == changeEventStatus) {
-                eventStatusChange(MainMenu.url, MainMenu.username, MainMenu.password);
+            switch (getEventEditSelection) {
+                case seeParticipatingPlayers :
+                    showParticipantList();
+                    break;
+                case changeEventStatus :
+                    eventStatusChange(MainMenu.url, MainMenu.username, MainMenu.password);
+                    break;
+                default :
+                    System.out.println("No such menu option.");
+                    eventEditMenu();
+                    break;
             }
         } while (getEventEditSelection != quitEventEditMenu);
     }
 
-    public static void clearEventListCache() {
+    private static void clearEventListCache() {
         eventDetailList.clear();
         eventDetailListComparison.clear();
     }

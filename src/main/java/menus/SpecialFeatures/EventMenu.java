@@ -49,7 +49,7 @@ public class EventMenu {
         statement.close();
         connection.close();
     }
-    static void eventListCacheClear (){
+    public static void eventListCacheClear(){
         eventList.clear();
         eventListComparison.clear();
     }

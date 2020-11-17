@@ -21,18 +21,28 @@ public class AdminMenu {
     public static void getAdminMenu() throws SQLException {
         do {
             getMenuSelection();
-            if (MainClass.menuSelection == doShowStats) {
-                UserMenu.showMyStats();
-            } else if (MainClass.menuSelection == doCountKda) {
-                UserMenu.countKda();
-            } else if (MainClass.menuSelection == dojoinCurrentEvents) {
-                UserMenu.joinCurrentEvents();
-            } else if (MainClass.menuSelection == doChangeUserStats) {
-                ChangeStatsMenu.specialSelectUser();
-            } else if (MainClass.menuSelection == doCreateEvent) {
-                adminInputValidation = true;
-                EventMenu.openEventMenu();
-                adminInputValidation = false;
+            switch (MainClass.menuSelection) {
+                case doShowStats:
+                    UserMenu.showMyStats();
+                    break;
+                case doCountKda:
+                    UserMenu.countKda();
+                    break;
+                case dojoinCurrentEvents:
+                    UserMenu.joinCurrentEvents();
+                    break;
+                case doChangeUserStats:
+                    ChangeStatsMenu.specialSelectUser();
+                    break;
+                case doCreateEvent:
+                    adminInputValidation = true;
+                    EventMenu.openEventMenu();
+                    adminInputValidation = false;
+                    break;
+                default :
+                    System.out.println("No such menu option.");
+                    getMenuSelection();
+                    break;
             }
         } while (MainClass.menuSelection != doExitMenu);
         UserMenu.userDisconnected();
