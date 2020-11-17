@@ -37,7 +37,7 @@ public class EventEditingMenu {
         } while (getEventEditSelection != quitEventEditMenu);
     }
 
-    static void clearEventListCache() {
+    public static void clearEventListCache() {
         eventDetailList.clear();
         eventDetailListComparison.clear();
     }

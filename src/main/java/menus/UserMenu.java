@@ -60,6 +60,7 @@ public class UserMenu {
     }
     public static void joinCurrentEvents() throws SQLException {
         EventEditingMenu.EventEditingSelection();
+        EventEditingMenu.clearEventListCache();
     }
     public static void userDisconnected() {
         LoginSystem.loginSuccessful = false;
