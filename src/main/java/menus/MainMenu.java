@@ -7,9 +7,9 @@ import LoginSystem.Utilities.DataRefresh;
 import java.sql.SQLException;
 
 public class MainMenu {
-    public static String url = "jdbc:mysql://localhost:3306/airsoftapp?useSSL=false";
-    public static String username = "root"; //  username
-    public static String password = "z_1755a1B!2c,/3Jk"; // password
+    public static String url = "jdbc:mysql://194.5.157.29:3306/airsoftapp?useSSL=false";
+    public static String username = "appuser"; //  username
+    public static String password = "K5991FXi"; // password
     public static int selection = 0;
 
     public static void getMainMenu() throws SQLException {

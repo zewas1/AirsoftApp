@@ -111,6 +111,7 @@ public class EventEditingMenu {
             System.out.println("Only numbers are allowed.");
         }
         selectEvent = 0;
+        clearEventListCache();
     }
 
     static void eventStatusChange(String url, String username, String password) throws SQLException {
