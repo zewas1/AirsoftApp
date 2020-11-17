@@ -1,4 +1,5 @@
 1. MAJOR BUG in menu logic. When you log in with an existing user, log out and then create a new user, you cannot use
 him to log in. FIXED
 2. IF database is empty, you can't create a new user. FIXED
-3. Select yourself for a stat-change as an admin, change your stats, check your user function of "check stats" -> should give you your new stats. fixed
+3. Select yourself for a stat-change as an admin, change your stats, check your user function of "check stats" -> should give you your new stats. fixed.
+4. test
