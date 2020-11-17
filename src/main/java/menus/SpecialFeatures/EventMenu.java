@@ -20,10 +20,17 @@ public class EventMenu {
     public static void openEventMenu() throws SQLException {
         do {
             getCreateEventMenu();
-            if (MainClass.menuSelection == doCreateEvent) {
-                createNewEvent(MainMenu.url, MainMenu.username, MainMenu.password);
-            } else if (MainClass.menuSelection == doEditEvent) {
-                EventEditingMenu.EventEditingSelection();
+            switch (MainClass.menuSelection) {
+                case doCreateEvent:
+                    createNewEvent(MainMenu.url, MainMenu.username, MainMenu.password);
+                    break;
+                case doEditEvent:
+                    EventEditingMenu.EventEditingSelection();
+                    break;
+                default:
+                    System.out.println("No such menu option.");
+                    getCreateEventMenu();
+                    break;
             }
         } while (MainClass.menuSelection != doExitEventMenu);
     }
@@ -49,7 +56,8 @@ public class EventMenu {
         statement.close();
         connection.close();
     }
-    public static void eventListCacheClear(){
+
+    public static void eventListCacheClear() {
         eventList.clear();
         eventListComparison.clear();
     }

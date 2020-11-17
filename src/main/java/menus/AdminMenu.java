@@ -39,7 +39,7 @@ public class AdminMenu {
                     EventMenu.openEventMenu();
                     adminInputValidation = false;
                     break;
-                default :
+                default:
                     System.out.println("No such menu option.");
                     getMenuSelection();
                     break;

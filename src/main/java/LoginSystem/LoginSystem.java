@@ -74,7 +74,7 @@ public class LoginSystem {
         System.out.println("3. Exit");
         try {
             MainMenu.selection = Integer.parseInt(scan.next());
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Only numbers are allowed.");
         }
     }

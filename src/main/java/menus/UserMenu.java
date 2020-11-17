@@ -31,7 +31,7 @@ public class UserMenu {
                     joinCurrentEvents();
                     userInputValidation = false;
                     break;
-                default :
+                default:
                     System.out.println("No such menu option.");
                     getMenuSelection();
                     break;
@@ -42,6 +42,9 @@ public class UserMenu {
 
     static void countKda() throws SQLException {
         DataRefresh.statRefresh();
+        if (DataRefresh.selectedUserKills / DataRefresh.selectedUserDeaths > 9000) {
+            System.out.println("It's over 9000.");
+        }
         System.out.println("KDA: " + (double) ((DataRefresh.selectedUserAssists) / 2 + DataRefresh.selectedUserKills) /
                 DataRefresh.selectedUserDeaths);
     }
@@ -62,14 +65,16 @@ public class UserMenu {
         System.out.println("4. Exit.");
         try {
             MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Only numbers are allowed.");
         }
     }
+
     public static void joinCurrentEvents() throws SQLException {
         EventEditingMenu.EventEditingSelection();
         EventMenu.eventListCacheClear();
     }
+
     public static void userDisconnected() {
         LoginSystem.loginSuccessful = false;
         DataRefresh.userListRefresh();

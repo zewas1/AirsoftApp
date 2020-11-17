@@ -30,13 +30,13 @@ public class EventEditingMenu {
             eventEditMenu();
             getEventEditSelection = Integer.parseInt(MainClass.scan.next());
             switch (getEventEditSelection) {
-                case seeParticipatingPlayers :
+                case seeParticipatingPlayers:
                     showParticipantList();
                     break;
-                case changeEventStatus :
+                case changeEventStatus:
                     eventStatusChange(MainMenu.url, MainMenu.username, MainMenu.password);
                     break;
-                default :
+                default:
                     System.out.println("No such menu option.");
                     eventEditMenu();
                     break;
@@ -49,16 +49,16 @@ public class EventEditingMenu {
         eventDetailListComparison.clear();
     }
 
-    private static void eventEditMenu(){
+    private static void eventEditMenu() {
         clearEventListCache();
         System.out.println("1. See participating player list.");
         System.out.println("2. Change event status.");
         System.out.println("3. Exit.");
     }
 
-    private static void showParticipantList () throws SQLException {
+    private static void showParticipantList() throws SQLException {
         uploadParticipantList(MainMenu.url, MainMenu.username, MainMenu.password);
-        for (EventDetails event : eventDetailList){
+        for (EventDetails event : eventDetailList) {
             System.out.println(event.getUserLogin() + " Participates in this event.");
         }
     }
@@ -67,7 +67,7 @@ public class EventEditingMenu {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
         if (eventDetailList.size() > eventDetailListComparison.size() || eventDetailList.isEmpty()) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM `event details` WHERE eventID='" + selectEvent+"'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM `event details` WHERE eventID='" + selectEvent + "'");
             while (resultSet.next()) {
                 EventDetails event = new EventDetails();
                 event.setId(resultSet.getInt("id"));
@@ -94,20 +94,20 @@ public class EventEditingMenu {
                 if (event.getId() == selectEvent && AdminMenu.adminInputValidation) {
                     isValidEventSelected = true;
                     System.out.println("Event " + event.getId() + " selected.");
-                    if (event.getIsActive()){
+                    if (event.getIsActive()) {
                         eventStatusConst = false;
-                    } else if (!event.getIsActive()){
+                    } else if (!event.getIsActive()) {
                         eventStatusConst = true;
                     }
                     eventEdit();
-                } else if (event.getId() == selectEvent && event.getIsActive() && UserMenu.userInputValidation){
+                } else if (event.getId() == selectEvent && event.getIsActive() && UserMenu.userInputValidation) {
                     isValidEventSelected = true;
                     System.out.println("Event " + event.getId() + " selected.");
                     newParticipantUpload(MainMenu.url, MainMenu.username, MainMenu.password);
                     selectEvent = 0;
                 }
             }
-            if (!isValidEventSelected && UserMenu.userInputValidation){
+            if (!isValidEventSelected && UserMenu.userInputValidation) {
                 System.out.println("You have selected an inactive or a non-existent event. Please select again.");
                 selectEvent = 0;
                 EventEditingSelection();
@@ -124,17 +124,17 @@ public class EventEditingMenu {
     static void eventStatusChange(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
-        String sqlString = "update events set isActive = " + eventStatusConst +" WHERE id ="+selectEvent+";";
+        String sqlString = "update events set isActive = " + eventStatusConst + " WHERE id =" + selectEvent + ";";
         statement.executeUpdate(sqlString);
         statement.close();
         connection.close();
         System.out.println("Event status changed!");
     }
 
-    private static void newParticipantUpload (String url, String username, String password) throws SQLException {
+    private static void newParticipantUpload(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
-        String sqlString = "INSERT INTO `event details` (eventID, userLogin, userId) VALUES ('"+ selectEvent +"', '"+ LoginSystem.currentUser +"', '"+ DataRefresh.currentUserId+"');";
+        String sqlString = "INSERT INTO `event details` (eventID, userLogin, userId) VALUES ('" + selectEvent + "', '" + LoginSystem.currentUser + "', '" + DataRefresh.currentUserId + "');";
         statement.executeUpdate(sqlString);
         statement.close();
         connection.close();
