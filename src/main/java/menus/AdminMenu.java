@@ -11,7 +11,7 @@ public class AdminMenu {
 
     private static final int doShowStats = 1;
     private static final int doCountKda = 2;
-    private static final int dojoinCurrentEvents = 3;
+    private static final int doJoinCurrentEvents = 3;
     private static final int doChangeUserStats = 4;
     private static final int doCreateEvent = 5;
     private static final int doExitMenu = 6;
@@ -28,7 +28,7 @@ public class AdminMenu {
                 case doCountKda:
                     UserMenu.countKda();
                     break;
-                case dojoinCurrentEvents:
+                case doJoinCurrentEvents:
                     UserMenu.joinCurrentEvents();
                     break;
                 case doChangeUserStats:
@@ -38,6 +38,8 @@ public class AdminMenu {
                     adminInputValidation = true;
                     EventMenu.openEventMenu();
                     adminInputValidation = false;
+                    break;
+                case doExitMenu:
                     break;
                 default:
                     System.out.println("No such menu option.");

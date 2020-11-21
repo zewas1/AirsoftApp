@@ -12,7 +12,7 @@ public class UserMenu {
 
     private static final int doShowStats = 1;
     private static final int doCountKda = 2;
-    private static final int dojoinCurrentEvents = 3;
+    private static final int doJoinCurrentEvents = 3;
     private static final int doExitMenu = 4;
     public static boolean userInputValidation = false;
 
@@ -26,10 +26,12 @@ public class UserMenu {
                 case doCountKda:
                     countKda();
                     break;
-                case dojoinCurrentEvents:
+                case doJoinCurrentEvents:
                     userInputValidation = true;
                     joinCurrentEvents();
                     userInputValidation = false;
+                    break;
+                case doExitMenu:
                     break;
                 default:
                     System.out.println("No such menu option.");

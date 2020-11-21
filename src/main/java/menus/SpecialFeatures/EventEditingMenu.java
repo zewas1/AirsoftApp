@@ -10,18 +10,20 @@ import menus.MainMenu;
 import menus.UserMenu;
 
 import java.sql.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventEditingMenu {
 
-    public static int selectEvent = 0;
+    public static String selectEvent = "0";
     public static boolean eventStatusConst = true;
     public static List<EventDetails> eventDetailList = new ArrayList<>();
     public static List<EventDetails> eventDetailListComparison = new ArrayList<>();
     private static final int seeParticipatingPlayers = 1;
     private static final int changeEventStatus = 2;
     private static final int quitEventEditMenu = 3;
+    private static final String quitEventSelection = "exit";
 
     private static void eventEdit() throws SQLException {
         int getEventEditSelection;
@@ -89,9 +91,9 @@ public class EventEditingMenu {
         boolean isValidEventSelected = false;
         eventSelectionList();
         try {
-            selectEvent = Integer.parseInt(MainClass.scan.next());
+            selectEvent = MainClass.scan.next();
             for (Event event : EventMenu.eventList) {
-                if (event.getId() == selectEvent && AdminMenu.adminInputValidation) {
+                if (String.valueOf(event.getId()).equals(selectEvent) && AdminMenu.adminInputValidation) {
                     isValidEventSelected = true;
                     System.out.println("Event " + event.getId() + " selected.");
                     if (event.getIsActive()) {
@@ -100,25 +102,36 @@ public class EventEditingMenu {
                         eventStatusConst = true;
                     }
                     eventEdit();
-                } else if (event.getId() == selectEvent && event.getIsActive() && UserMenu.userInputValidation) {
+                } else if (String.valueOf(event.getId()).equals(selectEvent) && event.getIsActive() && UserMenu.userInputValidation) {
                     isValidEventSelected = true;
                     System.out.println("Event " + event.getId() + " selected.");
                     newParticipantUpload(MainMenu.url, MainMenu.username, MainMenu.password);
-                    selectEvent = 0;
+                    selectEvent = "0";
+                } else if (selectEvent.equals(quitEventSelection) && AdminMenu.adminInputValidation ||
+                        selectEvent.equals(quitEventSelection) && UserMenu.userInputValidation) {
+                    isValidEventSelected = true;
+                    break;
+                } else if (!selectEvent.equals(String.valueOf(event.getId())) && AdminMenu.adminInputValidation ||
+                        !selectEvent.equals(String.valueOf(event.getId())) && UserMenu.userInputValidation){
+                    isValidEventSelected = false;
                 }
-            }
-            if (!isValidEventSelected && UserMenu.userInputValidation) {
-                System.out.println("You have selected an inactive or a non-existent event. Please select again.");
-                selectEvent = 0;
-                EventEditingSelection();
-            } else if (!isValidEventSelected && AdminMenu.adminInputValidation) {
-                System.out.println("Invalid event selection.");
             }
         } catch (NumberFormatException e) {
             System.out.println("Only numbers are allowed.");
         }
-        selectEvent = 0;
+        if (!isValidEventSelected && UserMenu.userInputValidation) {
+            invalidEventSelected();
+        } else if (!isValidEventSelected && AdminMenu.adminInputValidation) {
+            invalidEventSelected();
+        }
+        selectEvent = "0";
         clearEventListCache();
+    }
+
+    private static void invalidEventSelected() throws SQLException {
+        System.out.println("You have selected an inactive or a non-existent event. Please select again.");
+        selectEvent = "0";
+        EventEditingSelection();
     }
 
     static void eventStatusChange(String url, String username, String password) throws SQLException {
@@ -142,7 +155,7 @@ public class EventEditingMenu {
 
     private static void eventSelectionList() throws SQLException {
         EventMenu.getEventsFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-        System.out.println("Select Event by ID");
+        System.out.println("Select Event by ID. Type in 'exit' to leave.");
         for (Event event : EventMenu.eventList) {
             if (event.getId() > 0 && event.getIsActive()) {
                 System.out.println(event.getId() + " - is Active.");

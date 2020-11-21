@@ -3,8 +3,6 @@ package menus;
 import LoginSystem.LoginSystem;
 import LoginSystem.UserCreation;
 import LoginSystem.Utilities.DataRefresh;
-import main.MainClass;
-import menus.SpecialFeatures.EventEditingMenu;
 
 import java.sql.SQLException;
 
@@ -39,6 +37,8 @@ public class MainMenu {
                     } else {
                         System.out.println("Login was unsuccessful.");
                     }
+                    break;
+                case exitMenu:
                     break;
                 default:
                     System.out.println("No such menu option.");

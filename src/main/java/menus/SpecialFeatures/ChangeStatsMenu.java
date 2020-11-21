@@ -91,6 +91,8 @@ public class ChangeStatsMenu {
                     statChangeName = "assists";
                     specialChangeStat();
                     break;
+                case exitChangeStats:
+                    break;
                 default:
                     System.out.println("No such menu option.");
                     specialChangeStatsMenu();
