@@ -13,7 +13,6 @@ import java.sql.Statement;
 
 public class ChangeStatsMenu {
 
-    private static boolean isValidUserSelected = false;
     private static int setStat = 0;
     private static String uploadField = null;
     public static int selectUser = 0;
@@ -22,6 +21,7 @@ public class ChangeStatsMenu {
     private static final int changeDeathCount = 2;
     private static final int changeAssistCount = 3;
     private static final int exitChangeStats = 4;
+    private static final int quitUserSelection = 0;
 
     private static void specialChangeStatsMenu() {
         System.out.println("What stats would you like to change?");
@@ -32,11 +32,8 @@ public class ChangeStatsMenu {
     }
 
     public static void specialSelectUser() throws SQLException {
-        LoginSystem.getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
-        System.out.println("Select user by ID");
-        for (User user : LoginSystem.userList) {
-            System.out.println(user.getUserId() + " " + user.getUserLogin());
-        }
+        boolean isValidUserSelected = false;
+        showUserList();
         try {
             selectUser = Integer.parseInt(MainClass.scan.next());
             for (User user : LoginSystem.userList) {
@@ -46,6 +43,10 @@ public class ChangeStatsMenu {
                     DataRefresh.statRefresh();
                     showSelectUserStats();
                     specialChangeStats();
+                } else if (selectUser == quitUserSelection){
+                    System.out.println("You have left the menu.");
+                    isValidUserSelected = true;
+                    break;
                 }
             }
             if (!isValidUserSelected) {
@@ -57,14 +58,26 @@ public class ChangeStatsMenu {
         selectUser = 0;
     }
 
+    private static void showUserList() throws SQLException {
+        LoginSystem.getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
+        System.out.println("Select user by ID. Type '0' to leave this menu.");
+        for (User user : LoginSystem.userList) {
+            System.out.println(user.getUserId() + " " + user.getUserLogin());
+        }
+    }
+
     private static void specialChangeStat() throws SQLException {
         for (User user : LoginSystem.userList) {
             if (user.getUserId() == selectUser) {
-                System.out.println("How many " + statChangeName + " would you like to set?");
+                System.out.println("How many " + statChangeName + " would you like to set? Type '0' to leave this menu.");
                 setStat = Integer.parseInt(MainClass.scan.next());
-                uploadStatChanges(MainMenu.url, MainMenu.username, MainMenu.password);
-                DataRefresh.statRefresh();
-                showSelectUserStats();
+                if (setStat != quitUserSelection) {
+                    uploadStatChanges(MainMenu.url, MainMenu.username, MainMenu.password);
+                    DataRefresh.statRefresh();
+                    showSelectUserStats();
+                } else {
+                    System.out.println("You have left the menu.");
+                }
             }
         }
     }
