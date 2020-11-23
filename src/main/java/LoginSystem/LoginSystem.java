@@ -8,6 +8,7 @@ import java.util.Scanner;
 import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.Objects.User;
 import menus.MainMenu;
+import sun.security.util.Password;
 
 public class LoginSystem {
     public static final Scanner scan = new Scanner(System.in);
@@ -17,9 +18,11 @@ public class LoginSystem {
     public static int userIsAdmin;
     public static String currentUser = null;
 
+
     public static void loginCheck() {
         String tryUsername;
         String tryPassword;
+
         System.out.println("Please type in your username:");
         tryUsername = scan.next();
         System.out.println("Please type in your password:");
@@ -27,7 +30,7 @@ public class LoginSystem {
 
         for (User user : userList) {
             if (user.getUserLogin().equalsIgnoreCase(tryUsername)) {
-                if (user.getUserPassword().equals(tryPassword)) {
+                if (PasswordHashing.checkPassword(tryPassword,user.getUserPassword())) {
                     loginSuccessful = true;
                     currentUser = user.getUserLogin();
                     userIsAdmin = user.getIsAdmin();

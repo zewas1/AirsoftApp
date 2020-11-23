@@ -19,9 +19,12 @@ public class UserCreation {
         Statement statement = connection.createStatement();
         usernameCreation();
         passwordCreation();
-        String sqlString = "INSERT INTO users (userLogin,userPassword) VALUES('" + createUsername + "','" +
-                createPassword + "')";
-        statement.executeUpdate(sqlString);
+        String sqlString = "";
+        if (passwordFit = true){
+            sqlString = "INSERT INTO users (userLogin,userPassword) VALUES('" + createUsername + "','" +
+                    PasswordHashing.hashPassword(createPassword) + "')";
+            statement.executeUpdate(sqlString);
+        }
         statement.close();
         connection.close();
     }
@@ -55,7 +58,6 @@ public class UserCreation {
     }
 
     private static void passwordCreation() {
-        // create password hashing (optional)
         do {
             System.out.println("Create a password");
             createPassword = LoginSystem.scan.next();
