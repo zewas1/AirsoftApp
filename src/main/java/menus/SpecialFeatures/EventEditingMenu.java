@@ -23,6 +23,9 @@ public class EventEditingMenu {
     private static final int changeEventStatus = 2;
     private static final int quitEventEditMenu = 3;
     private static final int quitEventSelection = 0;
+    private static boolean showParticipantsValidation = false;
+    private static boolean duplicateEntryValidation = false;
+    private static ResultSet resultSet;
 
     private static void eventEdit() throws SQLException {
         int getEventEditSelection;
@@ -58,17 +61,23 @@ public class EventEditingMenu {
     }
 
     private static void showParticipantList() throws SQLException {
+        showParticipantsValidation = true;
         uploadParticipantList(MainMenu.url, MainMenu.username, MainMenu.password);
         for (EventDetails event : eventDetailList) {
             System.out.println(event.getUserLogin() + " Participates in this event.");
         }
+        showParticipantsValidation = false;
     }
 
     private static void uploadParticipantList(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
         if (eventDetailList.size() > eventDetailListComparison.size() || eventDetailList.isEmpty()) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM `event details` WHERE eventID='" + selectEvent + "'");
+            if (showParticipantsValidation) {
+                resultSet = statement.executeQuery("SELECT * FROM `event details` WHERE eventID='" + selectEvent + "'");
+            } else if (duplicateEntryValidation) {
+                resultSet = statement.executeQuery("select * from `event details`");
+            }
             while (resultSet.next()) {
                 EventDetails event = new EventDetails();
                 event.setId(resultSet.getInt("id"));
@@ -92,29 +101,22 @@ public class EventEditingMenu {
         try {
             selectEvent = Integer.parseInt(MainClass.scan.next());
             for (Event event : EventMenu.eventList) {
-                if (event.getId() == selectEvent && AdminMenu.adminInputValidation) {
+                if (selectEvent == event.getId() && AdminMenu.adminInputValidation) {
                     isValidEventSelected = true;
-                    System.out.println("Event " + event.getId() + " selected.");
-                    if (event.getIsActive()) {
-                        eventStatusConst = false;
-                    } else if (!event.getIsActive()) {
-                        eventStatusConst = true;
-                    }
-                    eventEdit();
-                } else if (event.getId() == selectEvent && event.getIsActive() && UserMenu.userInputValidation) {
-                    isValidEventSelected = true;
-                    System.out.println("Event " + event.getId() + " selected.");
-                    newParticipantUpload(MainMenu.url, MainMenu.username, MainMenu.password);
-                    selectEvent = 0;
-                }
-                if (selectEvent == quitEventSelection){
+                    eventEditValidation(event);
+                } else if (selectEvent == event.getId() && event.getIsActive() && UserMenu.userInputValidation ||
+                        event.getId() == selectEvent && event.getIsActive() && AdminMenu.adminInputValidation) {
+                    isValidEventSelected = duplicateEntryValidation(event);
+                } else if (selectEvent == quitEventSelection) {
                     System.out.println("You have left the menu.");
+                    isValidEventSelected = true;
                     break;
                 }
             }
             if (!isValidEventSelected && UserMenu.userInputValidation) {
                 System.out.println("You have selected an inactive or a non-existent event. Please select again.");
                 selectEvent = 0;
+                EventMenu.eventListCacheClear();
                 EventEditingSelection();
             } else if (!isValidEventSelected && AdminMenu.adminInputValidation) {
                 System.out.println("Invalid event selection.");
@@ -122,14 +124,43 @@ public class EventEditingMenu {
         } catch (NumberFormatException e) {
             System.out.println("Only numbers are allowed.");
         }
+        eventEditingSelectionClose();
+    }
+
+    private static void eventEditingSelectionClose() {
+        duplicateEntryValidation = false;
         selectEvent = 0;
         clearEventListCache();
     }
 
-    private static void invalidEventSelected() throws SQLException {
-        System.out.println("You have selected an inactive or a non-existent event. Please select again.");
-        selectEvent = 0;
-        EventEditingSelection();
+    private static boolean duplicateEntryValidation(Event event) throws SQLException {
+        boolean isValidEventSelected;
+        isValidEventSelected = true;
+        duplicateEntryValidation = true;
+        uploadParticipantList(MainMenu.url, MainMenu.username, MainMenu.password);
+        for (EventDetails details : eventDetailList) {
+            if (details.eventId == selectEvent && details.userId == DataRefresh.currentUserId) {
+                duplicateEntryValidation = false;
+                break;
+            }
+        }
+        if (duplicateEntryValidation) {
+            System.out.println("Event " + event.getId() + " selected.");
+            newParticipantUpload(MainMenu.url, MainMenu.username, MainMenu.password);
+        } else {
+            System.out.println("You have already joined this event!");
+        }
+        return isValidEventSelected;
+    }
+
+    private static void eventEditValidation(Event event) throws SQLException {
+        System.out.println("Event " + event.getId() + " selected.");
+        if (event.getIsActive()) {
+            eventStatusConst = false;
+        } else if (!event.getIsActive()) {
+            eventStatusConst = true;
+        }
+        eventEdit();
     }
 
     static void eventStatusChange(String url, String username, String password) throws SQLException {
