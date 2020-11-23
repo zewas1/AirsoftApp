@@ -1,5 +1,5 @@
 package LoginSystem;
-import LoginSystem.BCrypt.BCrypt;
+import LoginSystem.API.BCrypt;
 
 
 public class PasswordHashing {

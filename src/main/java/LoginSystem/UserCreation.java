@@ -2,7 +2,6 @@ package LoginSystem;
 
 import LoginSystem.Objects.User;
 import menus.MainMenu;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

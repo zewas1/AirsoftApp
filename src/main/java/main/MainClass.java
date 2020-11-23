@@ -5,8 +5,6 @@ import menus.MainMenu;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-//think about strategy patterns
-
 public class MainClass {
     public static final Scanner scan = new Scanner(System.in);
     public static int menuSelection = 0;

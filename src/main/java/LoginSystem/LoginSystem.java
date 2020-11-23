@@ -4,11 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.Objects.User;
 import menus.MainMenu;
-import sun.security.util.Password;
 
 public class LoginSystem {
     public static final Scanner scan = new Scanner(System.in);
@@ -69,7 +67,6 @@ public class LoginSystem {
 
 
     public static void getSelection() {
-        // think about ways to transfer console commands into UI
         System.out.println("Welcome to the airsoft data management tool.");
         System.out.println("1. Register a new user");
         System.out.println("2. Login with an already existing user");

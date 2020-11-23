@@ -6,17 +6,17 @@ user types and functions:
 can register ---> done
 view top 5 players (optional)
 2. registered user: ---> registered user is distinguished in the application
-can participate in "shooting game" and see accuracy
+can participate in "shooting game" and see accuracy ---> dropped
 can view own stats: accuracy from shooting game and KDA of airsoft games. ---> stat view is currently available only for checking stats of your airsoft game data.
 can update their personal info (change nickname, change password, change age)
-can create teams and invite other users (optional)
-can accept team invitations and see stats of a team (optional)
-can view top 5 players (optional)
+can create teams and invite other users --> To be developed
+can accept team invitations and see stats of a team --> to be developed
+can view top 5 players --> to be developed
 3. super user: ---> super user is
 all the functions of a regular user ---> regular user's functions added to the super user, but this is a work-in progress still.
 can create new users on the system, even if they are not registered
-can create airsoft game events
-can submit airsoft game data for every user ---> partially, at the moment super user can access any users, but can't do any changes yet.
+can create airsoft game events --> done
+can submit airsoft game data for every user ---> done
 
 registration rules:
 username must be unique ---> done
@@ -28,12 +28,23 @@ airsoft game events will be stored on database with the following info:
 participant nicknames (separate users table, separate events table will be interconnected), their score: kills, deaths, assists
 
 player info will be stored on database with the following info:
-username, accuracy in "shooting game", event participation count, kills total, death total, assist total, KDA score --->all done except for "shooting game", as it's not done yet
+username, accuracy in "shooting game", event participation count, kills total, death total, assist total, KDA score --->all done except, shooting game dropped.
 
-(note to self, TOP 5 players could be filtered by various factors. KDA score, most participated events, most kills etc.)
+(note to self, TOP 5 players could be filtered by various factors. KDA score, most participated events, most kills etc.) --> to be developed.
 
-if possible look into possibility of checking if mysql tables are already created, if not, make a class to create necessary tables to run the application correctly.
+if possible look into possibility of checking if mysql tables are already created, if not,
+make a class to create necessary tables to run the application correctly. --> dropped, no reason to create tables from UI.
 
-show how many players are registered to participate in events.
+show how many players are registered to participate in events. --> done for super user.
 show event name / registration deadline time.
 disallow registrations after event deadline.
+add additional parameter for user (verified user).
+Verified user can create teams and invite others.
+Create team management menu for users and verified users.
+user menu to show all teams inviting them.
+verified user team menu to change team's name, invite others users.
+Create events for teams only.
+Create validation for users with teams to join team only events.
+
+
+Transfer UI from console to web or app.

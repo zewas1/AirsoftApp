@@ -5,7 +5,6 @@ import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.Objects.User;
 import main.MainClass;
 import menus.MainMenu;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
