@@ -64,10 +64,12 @@ public class LoginSystem {
         connection.close();
     }
 
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String RESET = "\033[0m";
 
     public static void getSelection() {
         // think about ways to transfer console commands into UI
-        System.out.println("Welcome to the airsoft data management tool.");
+        System.out.println(ANSI_BLUE + "Welcome to the Airsoft data management tool." + LoginSystem.RESET);
         System.out.println("1. Register a new user");
         System.out.println("2. Login with an already existing user");
         //System.out.println("3. Show top 5 players");

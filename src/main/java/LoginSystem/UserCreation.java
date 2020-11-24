@@ -63,8 +63,9 @@ public class UserCreation {
                 System.out.println("User created successfully!");
                 passwordFit = true;
             } else {
-                System.out.println("Password is not valid, must be at least 8 symbols, contain numbers," +
-                        "lower, capital letters and symbols, please create a new password.");
+                System.out.println("The chosen password is not valid, as there must be at least 8 characters "
+                        + "containing at least a single number, a lower capital letter and a symbol. " +
+                        " Please create a new password.");
             }
         } while (!passwordFit);
     }

@@ -1,3 +1,12 @@
+7. Lets discuss the latest updates. KDA showing 0 instead on NaN, as well as a fix disallowing users to join the same event multiple times.
+
+8. Feature updates/requests
+
+9. Minor change requests
+ 9.1 Please review the 'invalid password' text
+
+
+~~~ History ~~~
 1. MAJOR BUG in menu logic. When you log in with an existing user, log out and then create a new user, you cannot use
 him to log in. FIXED
 2. IF database is empty, you can't create a new user. FIXED
