@@ -47,7 +47,7 @@ public class LoginSystem {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
         if (userList.size() > userListComparison.size() || userList.isEmpty()) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE");
             while (resultSet.next()) {
                 User user = new User();
                 user.setUserId(resultSet.getInt("userId"));
