@@ -40,6 +40,8 @@ public class EventEditingMenu {
                 case changeEventStatus:
                     eventStatusChange(MainMenu.url, MainMenu.username, MainMenu.password);
                     break;
+                case quitEventEditMenu:
+                    break;
                 default:
                     System.out.println("No such menu option.");
                     eventEditMenu();

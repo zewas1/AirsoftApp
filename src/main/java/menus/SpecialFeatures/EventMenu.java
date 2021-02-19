@@ -27,6 +27,8 @@ public class EventMenu {
                 case doEditEvent:
                     EventEditingMenu.EventEditingSelection();
                     break;
+                case doExitEventMenu:
+                    break;
                 default:
                     System.out.println("No such menu option.");
                     getCreateEventMenu();
