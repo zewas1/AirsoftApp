@@ -29,7 +29,9 @@ public class AdminMenu {
                     UserMenu.countKda();
                     break;
                 case doJoinCurrentEvents:
+                    UserMenu.userInputValidation = true;
                     UserMenu.joinCurrentEvents();
+                    UserMenu.userInputValidation = false;
                     break;
                 case doChangeUserStats:
                     ChangeStatsMenu.specialSelectUser();

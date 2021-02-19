@@ -58,5 +58,6 @@ public class DataRefresh {
     public static void userListRefresh() {
         LoginSystem.userList.clear();
         LoginSystem.userListComparison.clear();
+        ChangeStatsMenu.selectUser = 0;
     }
 }
