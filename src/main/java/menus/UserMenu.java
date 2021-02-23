@@ -5,6 +5,7 @@ import LoginSystem.LoginSystem;
 import main.MainClass;
 import menus.SpecialFeatures.EventEditingMenu;
 import menus.SpecialFeatures.EventMenu;
+import menus.SpecialFeatures.TeamMenu;
 
 import java.sql.SQLException;
 
@@ -13,7 +14,8 @@ public class UserMenu {
     private static final int doShowStats = 1;
     private static final int doCountKda = 2;
     private static final int doJoinCurrentEvents = 3;
-    private static final int doExitMenu = 4;
+    private static final int doOpenTeamMenu = 4;
+    private static final int doExitMenu = 5;
     public static boolean userInputValidation = false;
 
     public static void getUserMenu() throws SQLException {
@@ -31,6 +33,8 @@ public class UserMenu {
                     joinCurrentEvents();
                     userInputValidation = false;
                     break;
+                case doOpenTeamMenu:
+                    TeamMenu.openTeamMenu();
                 case doExitMenu:
                     break;
                 default:
@@ -76,7 +80,8 @@ public class UserMenu {
         System.out.println("1. Check your stats");
         System.out.println("2. Calculate KDA");
         System.out.println("3. Join on-going events.");
-        System.out.println("4. Exit.");
+        System.out.println("4. Teams menu.");
+        System.out.println("5. Exit.");
         try {
             MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
         } catch (NumberFormatException e) {

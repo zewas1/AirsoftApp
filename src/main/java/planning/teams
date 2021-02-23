@@ -1,0 +1,15 @@
+teams:
+
+can be created by approved members (different user levels currently 1 admin, 0 user, elevate admin to 99, make approved user 1)
+all users can see "teams" option in their menu, but only approved users+ can see a function of creating new team. Other users
+see "join team" option, which allows joining any created team, which has "open for recruitment" enabled.
+
+team managing menu from user and team owner perspective. User may not join more than one team, user can at any time leave the team.
+create different event levels (solo + team events distinction in DB). Team leads can join team events if certain number of members are on that team.
+only approved users (team leads)+ can see the extra events.
+
+PENDING think about solution for when the users leave the team and it's registered for an event. (maybe notification for admin?)
+
+
+SEPARATE admins can have their own ACP to control user info without accessing DB (password change, user approval, user ban)
+
