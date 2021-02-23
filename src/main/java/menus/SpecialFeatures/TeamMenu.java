@@ -15,9 +15,11 @@ public class TeamMenu {
             switch (teamMenuSelection) {
                 case doJoinTeam:
                     System.out.println("Team join options");
+                    teamJoin();
                     break;
                 case doOpenTeamManagement:
                     System.out.println("Team management menu");
+                    TeamManagementMenu.openTeamManagementMenu();
                     break;
                 case doExitTeamMenu:
                     break;

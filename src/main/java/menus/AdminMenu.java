@@ -2,8 +2,7 @@ package menus;
 
 import LoginSystem.LoginSystem;
 import main.MainClass;
-import menus.SpecialFeatures.ChangeStatsMenu;
-import menus.SpecialFeatures.EventMenu;
+import menus.SpecialFeatures.*;
 
 import java.sql.SQLException;
 
@@ -13,8 +12,10 @@ public class AdminMenu {
     private static final int doCountKda = 2;
     private static final int doJoinCurrentEvents = 3;
     private static final int doChangeUserStats = 4;
-    private static final int doCreateEvent = 5;
-    private static final int doExitMenu = 6;
+    private static final int doOpenTeamMenu = 5;
+    private static final int doCreateEvent = 6;
+    private static final int topFivePlayers = 7;
+    private static final int doExitMenu = 8;
     public static boolean adminInputValidation;
 
 
@@ -36,11 +37,15 @@ public class AdminMenu {
                 case doChangeUserStats:
                     ChangeStatsMenu.specialSelectUser();
                     break;
+                case doOpenTeamMenu:
+                    TeamMenu.openTeamMenu();
                 case doCreateEvent:
                     adminInputValidation = true;
                     EventMenu.openEventMenu();
                     adminInputValidation = false;
                     break;
+                case topFivePlayers:
+                    TopFiveMenu.topFivePlayers();
                 case doExitMenu:
                     break;
                 default:
@@ -59,8 +64,10 @@ public class AdminMenu {
         System.out.println("2. Calculate KDA");
         System.out.println("3. Join on-going events.");
         System.out.println("4. Change user stats.");
-        System.out.println("5. Access event menu.");
-        System.out.println("6. exit.");
+        System.out.println("5. Teams menu.");
+        System.out.println("6. Access event menu.");
+        System.out.println("7. Top five players.");
+        System.out.println("8. exit.");
         try {
             MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
         } catch (NumberFormatException e) {
