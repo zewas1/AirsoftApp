@@ -8,6 +8,16 @@ public class User implements Comparable<User> {
     public int killCount;
     public int deathCount;
     public int assistCount;
+    public int playerRank;
+
+
+    public int getPlayerRank() {
+        return playerRank;
+    }
+
+    public void setPlayerRank(int playerRank) {
+        this.playerRank = playerRank;
+    }
 
     public int getKillCount() {
         return killCount;
