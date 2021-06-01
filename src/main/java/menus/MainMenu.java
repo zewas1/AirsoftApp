@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class MainMenu {
 
-    public static String url = "jdbc:mysql://194.5.157.29:3306/airsoftapp?useSSL=false";
+    public static String url = "jdbc:mysql://127.0.0.1:3306/airsoftapp?useSSL=false";
     public static String username = "appuser"; //  system username
     public static String password = "K5991FXi"; // system password. FYI, this is a bad practice, think about ways to remedy this.
     public static int selection = 0;
