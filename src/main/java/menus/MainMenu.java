@@ -12,6 +12,7 @@ public class MainMenu {
     public static String username = "appuser"; //  system username
     public static String password = "K5991FXi"; // system password. FYI, this is a bad practice, think about ways to remedy this.
     public static int selection = 0;
+
     private static final int doCreateUser = 1;
     private static final int doConnectUser = 2;
     private static final int exitMenu = 3;

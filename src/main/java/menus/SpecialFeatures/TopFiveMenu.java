@@ -36,8 +36,8 @@ public class TopFiveMenu {
 
     private static void showTopFive(){
         for (User user : playerList) {
-            int maxTop = 5;
-            if (user.getPlayerRank() <= maxTop) {
+            int maxTopPlayers = 5;
+            if (user.getPlayerRank() <= maxTopPlayers) {
                 System.out.println("User " + user.getUserLogin() + " is " + user.getPlayerRank() + " with " + user.getKillCount() + " kills");
             }
         }

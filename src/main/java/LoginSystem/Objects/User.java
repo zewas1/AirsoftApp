@@ -1,6 +1,6 @@
 package LoginSystem.Objects;
 
-public class User implements Comparable<User> {
+public class User {
     public int userId;
     public int isAdmin;
     public String userLogin;
@@ -10,7 +10,9 @@ public class User implements Comparable<User> {
     public int assistCount;
     public int playerRank;
 
-
+    /**
+     * @return playerRank
+     */
     public int getPlayerRank() {
         return playerRank;
     }
@@ -75,8 +77,4 @@ public class User implements Comparable<User> {
         this.userPassword = userPassword;
     }
 
-    @Override
-    public int compareTo(User o) {
-        return 0;
-    }
 }
