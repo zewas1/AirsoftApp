@@ -47,6 +47,7 @@ public class DataRefresh {
                 user.setKillCount(resultSet.getInt("killCount"));
                 user.setDeathCount(resultSet.getInt("deathCount"));
                 user.setAssistCount(resultSet.getInt("assistCount"));
+                user.setUserLevel(resultSet.getInt("userLevel"));
                 showDataList.add(user);
             }
             resultSet.close();

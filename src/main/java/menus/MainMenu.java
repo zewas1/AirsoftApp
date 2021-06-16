@@ -1,6 +1,7 @@
 package menus;
 
 import LoginSystem.LoginSystem;
+import LoginSystem.Objects.User;
 import LoginSystem.UserCreation;
 import LoginSystem.Utilities.DataRefresh;
 
@@ -31,11 +32,7 @@ public class MainMenu {
                     LoginSystem.loginCheck();
                     if (LoginSystem.loginSuccessful) {
                         DataRefresh.statRefresh();
-                        if (LoginSystem.userIsAdmin > 0) {
-                            AdminMenu.getAdminMenu();
-                        } else if (LoginSystem.userIsAdmin == 0) {
-                            UserMenu.getUserMenu();
-                        }
+                        validateUserType();
                     } else {
                         System.out.println("Login was unsuccessful.");
                     }
@@ -48,5 +45,13 @@ public class MainMenu {
                     break;
             }
         } while (selection != exitMenu);
+    }
+
+    private static void validateUserType() throws SQLException {
+        if (LoginSystem.userIsAdmin == User.adminUserType) {
+            AdminMenu.getAdminMenu();
+        } else if (LoginSystem.userIsAdmin == User.regularUserType) {
+            UserMenu.getUserMenu();
+        }
     }
 }

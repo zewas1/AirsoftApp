@@ -8,7 +8,14 @@ public class User {
     public int killCount;
     public int deathCount;
     public int assistCount;
+    public int userLevel;
     public int playerRank;
+
+    public static final int regularUserType = 0;
+    public static final int adminUserType = 1;
+
+    public static final int regularUserLevel = 0;
+    public static final int elevatedUserLevel = 1;
 
     /**
      * @return playerRank
@@ -75,6 +82,14 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public int getUserLevel() {
+        return userLevel;
+    }
+
+    public void setUserLevel(int userLevel) {
+        this.userLevel = userLevel;
     }
 
 }

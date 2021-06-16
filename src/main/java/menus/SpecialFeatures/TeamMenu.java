@@ -9,7 +9,7 @@ public class TeamMenu {
     private static final int doExitTeamMenu = 3;
     private static int teamMenuSelection = 0;
 
-    public static void openTeamMenu(){
+    public static void openTeamMenu() {
         do {
             getTeamMenuSelection();
             switch (teamMenuSelection) {
@@ -28,7 +28,7 @@ public class TeamMenu {
                     getTeamMenuSelection();
                     break;
             }
-        } while (teamMenuSelection!=doExitTeamMenu);
+        } while (teamMenuSelection != doExitTeamMenu);
 
     }
 
@@ -44,7 +44,7 @@ public class TeamMenu {
         }
     }
 
-    private static void teamJoin(){
+    private static void teamJoin() {
 
     }
 }

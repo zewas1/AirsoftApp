@@ -10,7 +10,7 @@ public class TeamManagementMenu {
     private static final int doExitMenu = 3;
     private static int teamManagementSelection = 0;
 
-    public static void openTeamManagementMenu (){
+    public static void openTeamManagementMenu() {
 
         do {
             getTeamManagementSelection();
@@ -30,9 +30,8 @@ public class TeamManagementMenu {
                     getTeamManagementSelection();
                     break;
             }
-        } while (teamManagementSelection!=doExitMenu);
-        }
-
+        } while (teamManagementSelection != doExitMenu);
+    }
 
 
     private static void getTeamManagementSelection() {
@@ -47,11 +46,11 @@ public class TeamManagementMenu {
         }
     }
 
-    private static void createTeam(){
+    private static void createTeam() {
 
     }
 
-    private static void kickPlayers(){
+    private static void kickPlayers() {
 
     }
 

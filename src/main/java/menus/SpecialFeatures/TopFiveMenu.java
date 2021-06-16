@@ -34,7 +34,7 @@ public class TopFiveMenu {
         showTopFive();
     }
 
-    private static void showTopFive(){
+    private static void showTopFive() {
         for (User user : playerList) {
             int maxTopPlayers = 5;
             if (user.getPlayerRank() <= maxTopPlayers) {
