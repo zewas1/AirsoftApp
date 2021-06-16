@@ -5,6 +5,7 @@ import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.Objects.User;
 import main.MainClass;
 import menus.MainMenu;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -42,7 +43,7 @@ public class ChangeStatsMenu {
                     DataRefresh.statRefresh();
                     showSelectUserStats();
                     specialChangeStats();
-                } else if (selectUser == quitUserSelection){
+                } else if (selectUser == quitUserSelection) {
                     System.out.println("You have left the menu.");
                     isValidUserSelected = true;
                     break;

@@ -1,6 +1,7 @@
 package menus;
 
 import LoginSystem.LoginSystem;
+import LoginSystem.Objects.User;
 import LoginSystem.UserCreation;
 import LoginSystem.Utilities.DataRefresh;
 
@@ -12,6 +13,7 @@ public class MainMenu {
     public static String username = "appuser"; //  system username
     public static String password = "K5991FXi"; // system password. FYI, this is a bad practice, think about ways to remedy this.
     public static int selection = 0;
+
     private static final int doCreateUser = 1;
     private static final int doConnectUser = 2;
     private static final int exitMenu = 3;
@@ -30,11 +32,7 @@ public class MainMenu {
                     LoginSystem.loginCheck();
                     if (LoginSystem.loginSuccessful) {
                         DataRefresh.statRefresh();
-                        if (LoginSystem.userIsAdmin > 0) {
-                            AdminMenu.getAdminMenu();
-                        } else if (LoginSystem.userIsAdmin == 0) {
-                            UserMenu.getUserMenu();
-                        }
+                        validateUserType();
                     } else {
                         System.out.println("Login was unsuccessful.");
                     }
@@ -47,5 +45,13 @@ public class MainMenu {
                     break;
             }
         } while (selection != exitMenu);
+    }
+
+    private static void validateUserType() throws SQLException {
+        if (LoginSystem.userIsAdmin == User.adminUserType) {
+            AdminMenu.getAdminMenu();
+        } else if (LoginSystem.userIsAdmin == User.regularUserType) {
+            UserMenu.getUserMenu();
+        }
     }
 }

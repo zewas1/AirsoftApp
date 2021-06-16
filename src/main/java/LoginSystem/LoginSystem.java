@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.Objects.User;
 import menus.MainMenu;
@@ -28,7 +29,7 @@ public class LoginSystem {
 
         for (User user : userList) {
             if (user.getUserLogin().equalsIgnoreCase(tryUsername)) {
-                if (PasswordHashing.checkPassword(tryPassword,user.getUserPassword())) {
+                if (PasswordHashing.checkPassword(tryPassword, user.getUserPassword())) {
                     loginSuccessful = true;
                     currentUser = user.getUserLogin();
                     userIsAdmin = user.getIsAdmin();
@@ -57,6 +58,7 @@ public class LoginSystem {
                 user.setKillCount(resultSet.getInt("killCount"));
                 user.setDeathCount(resultSet.getInt("deathCount"));
                 user.setAssistCount(resultSet.getInt("assistCount"));
+                user.setUserLevel(resultSet.getInt("userLevel"));
                 userList.add(user);
             }
             resultSet.close();

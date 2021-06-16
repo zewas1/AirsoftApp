@@ -59,9 +59,9 @@ public class UserMenu {
                 System.out.println("KDA: " + (double) ((DataRefresh.selectedUserAssists) / 2 + DataRefresh.selectedUserKills) /
                         DataRefresh.selectedUserDeaths);
             }
-        } catch (ArithmeticException e){
+        } catch (ArithmeticException e) {
             if (DataRefresh.selectedUserKills > DataRefresh.selectedUserDeaths ||
-                    DataRefresh.selectedUserAssists > DataRefresh.selectedUserDeaths){
+                    DataRefresh.selectedUserAssists > DataRefresh.selectedUserDeaths) {
                 System.out.println("You have a perfect KDA. " + DataRefresh.selectedUserKills + " kills, " +
                         DataRefresh.selectedUserAssists + " assists, " + DataRefresh.selectedUserDeaths + " deaths.");
             } else {

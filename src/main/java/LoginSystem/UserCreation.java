@@ -2,6 +2,7 @@ package LoginSystem;
 
 import LoginSystem.Objects.User;
 import menus.MainMenu;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,10 +19,9 @@ public class UserCreation {
         Statement statement = connection.createStatement();
         usernameCreation();
         passwordCreation();
-        String sqlString = "";
-        if (passwordFit = true){
-            sqlString = "INSERT INTO users (userLogin,userPassword) VALUES('" + createUsername + "','" +
-                    PasswordHashing.hashPassword(createPassword) + "')";
+        if (passwordFit = true) {
+            String sqlString = "INSERT INTO users (userLogin,userPassword,userLevel) VALUES('" + createUsername + "','" +
+                    PasswordHashing.hashPassword(createPassword) + "','" + User.regularUserLevel +  "')";
             statement.executeUpdate(sqlString);
         }
         statement.close();

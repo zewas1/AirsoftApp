@@ -57,13 +57,13 @@ public class EventMenu {
         statement.executeUpdate(sqlString);
         statement.close();
         connection.close();
+        System.out.println("Event created successfully!");
     }
 
     public static void eventListCacheClear() {
         eventList.clear();
         eventListComparison.clear();
     }
-
 
     public static void getEventsFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
