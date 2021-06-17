@@ -18,7 +18,7 @@ public class User {
     public static final int elevatedUserLevel = 1;
 
     /**
-     * @return playerRank
+     * @return int playerRank
      */
     public int getPlayerRank() {
         return playerRank;

@@ -9,9 +9,10 @@ import java.sql.SQLException;
 
 public class MainMenu {
 
-    public static String url = "jdbc:mysql://127.0.0.1:3306/airsoftapp?useSSL=false";
-    public static String username = "appuser"; //  system username
-    public static String password = "K5991FXi"; // system password. FYI, this is a bad practice, think about ways to remedy this.
+    public static final String url = "jdbc:mysql://127.0.0.1:3306/airsoftapp?useSSL=false";
+    public static final String username = "appuser"; //  system username
+    public static final String password = "K5991FXi"; // system password.
+
     public static int selection = 0;
 
     private static final int doCreateUser = 1;
@@ -27,9 +28,7 @@ public class MainMenu {
                     UserCreation.userCreation(url, username, password);
                     break;
                 case doConnectUser:
-                    LoginSystem.getUsersFromDb(url, username, password);
-                    LoginSystem.userListComparison = LoginSystem.userList;
-                    LoginSystem.loginCheck();
+                    checkUserConnection();
                     if (LoginSystem.loginSuccessful) {
                         DataRefresh.statRefresh();
                         validateUserType();
@@ -45,6 +44,12 @@ public class MainMenu {
                     break;
             }
         } while (selection != exitMenu);
+    }
+
+    private static void checkUserConnection() throws SQLException {
+        LoginSystem.getUsersFromDb(url, username, password);
+        LoginSystem.userListComparison = LoginSystem.userList;
+        LoginSystem.loginCheck();
     }
 
     private static void validateUserType() throws SQLException {
