@@ -13,10 +13,12 @@ import java.sql.Statement;
 
 public class ChangeStatsMenu {
 
-    private static int setStat = 0;
-    private static String uploadField = null;
     public static int selectUser = 0;
+    private static int setStat = 0;
+
+    private static String uploadField = null;
     private static String statChangeName = null;
+
     private static final int changeKillCount = 1;
     private static final int changeDeathCount = 2;
     private static final int changeAssistCount = 3;
@@ -71,14 +73,18 @@ public class ChangeStatsMenu {
             if (user.getUserId() == selectUser) {
                 System.out.println("How many " + statChangeName + " would you like to set? Type '0' to leave this menu.");
                 setStat = Integer.parseInt(MainClass.scan.next());
-                if (setStat != quitUserSelection) {
-                    uploadStatChanges(MainMenu.url, MainMenu.username, MainMenu.password);
-                    DataRefresh.statRefresh();
-                    showSelectUserStats();
-                } else {
-                    System.out.println("You have left the menu.");
-                }
+                statChangeAction();
             }
+        }
+    }
+
+    private static void statChangeAction() throws SQLException {
+        if (setStat != quitUserSelection) {
+            uploadStatChanges();
+            DataRefresh.statRefresh();
+            showSelectUserStats();
+        } else {
+            System.out.println("You have left the menu.");
         }
     }
 
@@ -114,8 +120,8 @@ public class ChangeStatsMenu {
         } while (getSelectStatChange != exitChangeStats);
     }
 
-    private static void uploadStatChanges(String url, String username, String password) throws SQLException {
-        Connection connection = DriverManager.getConnection(url, username, password);
+    private static void uploadStatChanges() throws SQLException {
+        Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
         String sqlString = "UPDATE `users` SET `" + uploadField + "` ='" + setStat + "' WHERE `userId` = '" + selectUser + "'";
         statement.executeUpdate(sqlString);

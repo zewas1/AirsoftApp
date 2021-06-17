@@ -16,6 +16,7 @@ public class AdminMenu {
     private static final int doCreateEvent = 6;
     private static final int topFivePlayers = 7;
     private static final int doExitMenu = 8;
+
     public static boolean adminInputValidation;
 
 

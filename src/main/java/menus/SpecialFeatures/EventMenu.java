@@ -22,7 +22,7 @@ public class EventMenu {
             getCreateEventMenu();
             switch (MainClass.menuSelection) {
                 case doCreateEvent:
-                    createNewEvent(MainMenu.url, MainMenu.username, MainMenu.password);
+                    createNewEvent();
                     break;
                 case doEditEvent:
                     EventEditingMenu.EventEditingSelection();
@@ -50,8 +50,8 @@ public class EventMenu {
         }
     }
 
-    static void createNewEvent(String url, String username, String password) throws SQLException {
-        Connection connection = DriverManager.getConnection(url, username, password);
+    static void createNewEvent() throws SQLException {
+        Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
         String sqlString = "INSERT INTO events (isActive) VALUES ('1');";
         statement.executeUpdate(sqlString);

@@ -36,19 +36,23 @@ public class UserCreation {
         } else {
             do {
                 usernameInput();
-                for (User user : LoginSystem.userList) {
-                    if (user.getUserLogin().equalsIgnoreCase(createUsername)) {
-                        System.out.println("This username already exists!");
-                        usernameFit = false;
-                        break;
-                    } else {
-                        usernameFit = true;
-                    }
-                }
+                validateUserLogin();
             } while (!usernameFit);
         }
         LoginSystem.userList.clear();
         LoginSystem.userListComparison.clear();
+    }
+
+    private static void validateUserLogin() {
+        for (User user : LoginSystem.userList) {
+            if (user.getUserLogin().equalsIgnoreCase(createUsername)) {
+                System.out.println("This username already exists!");
+                usernameFit = false;
+                break;
+            } else {
+                usernameFit = true;
+            }
+        }
     }
 
     private static void usernameInput() {

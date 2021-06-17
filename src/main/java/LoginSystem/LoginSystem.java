@@ -28,19 +28,23 @@ public class LoginSystem {
         tryPassword = scan.next();
 
         for (User user : userList) {
-            if (user.getUserLogin().equalsIgnoreCase(tryUsername)) {
-                if (PasswordHashing.checkPassword(tryPassword, user.getUserPassword())) {
-                    loginSuccessful = true;
-                    currentUser = user.getUserLogin();
-                    userIsAdmin = user.getIsAdmin();
-                    DataRefresh.currentUserId = user.getUserId();
-                }
-            }
+            validateLoginInput(tryUsername, tryPassword, user);
         }
         if (loginSuccessful) {
             System.out.println("Login successful");
         } else {
             System.out.println("Username or password is not correct.");
+        }
+    }
+
+    private static void validateLoginInput(String tryUsername, String tryPassword, User user) {
+        if (user.getUserLogin().equalsIgnoreCase(tryUsername)) {
+            if (PasswordHashing.checkPassword(tryPassword, user.getUserPassword())) {
+                loginSuccessful = true;
+                currentUser = user.getUserLogin();
+                userIsAdmin = user.getIsAdmin();
+                DataRefresh.currentUserId = user.getUserId();
+            }
         }
     }
 
