@@ -73,14 +73,18 @@ public class ChangeStatsMenu {
             if (user.getUserId() == selectUser) {
                 System.out.println("How many " + statChangeName + " would you like to set? Type '0' to leave this menu.");
                 setStat = Integer.parseInt(MainClass.scan.next());
-                if (setStat != quitUserSelection) {
-                    uploadStatChanges();
-                    DataRefresh.statRefresh();
-                    showSelectUserStats();
-                } else {
-                    System.out.println("You have left the menu.");
-                }
+                statChangeAction();
             }
+        }
+    }
+
+    private static void statChangeAction() throws SQLException {
+        if (setStat != quitUserSelection) {
+            uploadStatChanges();
+            DataRefresh.statRefresh();
+            showSelectUserStats();
+        } else {
+            System.out.println("You have left the menu.");
         }
     }
 

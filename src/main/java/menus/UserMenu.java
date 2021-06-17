@@ -53,22 +53,29 @@ public class UserMenu {
     static void countKda() throws SQLException {
         DataRefresh.statRefresh();
         try {
-            if (DataRefresh.selectedUserKills / DataRefresh.selectedUserDeaths >= 9000) {
-                System.out.println("It's over 9000.");
-            } else {
-                System.out.println("KDA: " + (double) ((DataRefresh.selectedUserAssists) / 2 + DataRefresh.selectedUserKills) /
-                        DataRefresh.selectedUserDeaths);
-            }
+            kdaCalculations();
         } catch (ArithmeticException e) {
-            if (DataRefresh.selectedUserKills > DataRefresh.selectedUserDeaths ||
-                    DataRefresh.selectedUserAssists > DataRefresh.selectedUserDeaths) {
-                System.out.println("You have a perfect KDA. " + DataRefresh.selectedUserKills + " kills, " +
-                        DataRefresh.selectedUserAssists + " assists, " + DataRefresh.selectedUserDeaths + " deaths.");
-            } else {
-                System.out.println("KDA is 0.");
-            }
+            kdaSpecialCalculations();
         }
+    }
 
+    private static void kdaCalculations() {
+        if (DataRefresh.selectedUserKills / DataRefresh.selectedUserDeaths >= 9000) {
+            System.out.println("It's over 9000.");
+        } else {
+            System.out.println("KDA: " + (double) ((DataRefresh.selectedUserAssists) / 2 + DataRefresh.selectedUserKills) /
+                    DataRefresh.selectedUserDeaths);
+        }
+    }
+
+    private static void kdaSpecialCalculations() {
+        if (DataRefresh.selectedUserKills > DataRefresh.selectedUserDeaths ||
+                DataRefresh.selectedUserAssists > DataRefresh.selectedUserDeaths) {
+            System.out.println("You have a perfect KDA. " + DataRefresh.selectedUserKills + " kills, " +
+                    DataRefresh.selectedUserAssists + " assists, " + DataRefresh.selectedUserDeaths + " deaths.");
+        } else {
+            System.out.println("KDA is 0.");
+        }
     }
 
     static void showMyStats() throws SQLException {

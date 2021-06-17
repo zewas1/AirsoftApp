@@ -17,14 +17,18 @@ public class EventEditingMenu {
 
     public static int selectEvent;
     public static boolean eventStatusConst = true;
+
     public static List<EventDetails> eventDetailList = new ArrayList<>();
     public static List<EventDetails> eventDetailListComparison = new ArrayList<>();
+
     private static final int seeParticipatingPlayers = 1;
     private static final int changeEventStatus = 2;
     private static final int quitEventEditMenu = 3;
     private static final int quitEventSelection = 0;
-    private static boolean showParticipantsValidation = false;
-    private static boolean duplicateEntryValidation = false;
+
+    private static boolean showParticipantList = false;
+    private static boolean duplicateEntry = false;
+
     private static ResultSet resultSet;
 
     private static void eventEdit() throws SQLException {
@@ -38,7 +42,7 @@ public class EventEditingMenu {
                     showParticipantList();
                     break;
                 case changeEventStatus:
-                    eventStatusChange(MainMenu.url, MainMenu.username, MainMenu.password);
+                    eventStatusChange();
                     break;
                 case quitEventEditMenu:
                     break;
@@ -63,23 +67,19 @@ public class EventEditingMenu {
     }
 
     private static void showParticipantList() throws SQLException {
-        showParticipantsValidation = true;
-        uploadParticipantList(MainMenu.url, MainMenu.username, MainMenu.password);
+        showParticipantList = true;
+        uploadParticipantList();
         for (EventDetails event : eventDetailList) {
             System.out.println(event.getUserLogin() + " Participates in this event.");
         }
-        showParticipantsValidation = false;
+        showParticipantList = false;
     }
 
-    private static void uploadParticipantList(String url, String username, String password) throws SQLException {
-        Connection connection = DriverManager.getConnection(url, username, password);
+    private static void uploadParticipantList() throws SQLException {
+        Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
         if (eventDetailList.size() > eventDetailListComparison.size() || eventDetailList.isEmpty()) {
-            if (showParticipantsValidation) {
-                resultSet = statement.executeQuery("SELECT * FROM `event details` WHERE eventID='" + selectEvent + "'");
-            } else if (duplicateEntryValidation) {
-                resultSet = statement.executeQuery("select * from `event details`");
-            }
+            validateEventEditingScenario(statement);
             while (resultSet.next()) {
                 EventDetails event = new EventDetails();
                 event.setId(resultSet.getInt("id"));
@@ -103,13 +103,8 @@ public class EventEditingMenu {
         try {
             selectEvent = Integer.parseInt(MainClass.scan.next());
             for (Event event : EventMenu.eventList) {
-                if (selectEvent == event.getId() && AdminMenu.adminInputValidation) {
-                    isValidEventSelected = true;
-                    eventEditValidation(event);
-                } else if (selectEvent == event.getId() && event.getIsActive() && UserMenu.userInputValidation ||
-                        event.getId() == selectEvent && event.getIsActive() && AdminMenu.adminInputValidation) {
-                    isValidEventSelected = duplicateEntryValidation(event);
-                } else if (selectEvent == quitEventSelection) {
+                isValidEventSelected = userTypeValidation(isValidEventSelected, event);
+                if (selectEvent == quitEventSelection) {
                     System.out.println("You have left the menu.");
                     isValidEventSelected = true;
                     break;
@@ -129,8 +124,19 @@ public class EventEditingMenu {
         eventEditingSelectionClose();
     }
 
+    private static boolean userTypeValidation(boolean isValidEventSelected, Event event) throws SQLException {
+        if (selectEvent == event.getId() && AdminMenu.adminInputValidation) {
+            isValidEventSelected = true;
+            eventEditValidation(event);
+        } else if (selectEvent == event.getId() && event.getIsActive() && UserMenu.userInputValidation ||
+                event.getId() == selectEvent && event.getIsActive() && AdminMenu.adminInputValidation) {
+            isValidEventSelected = duplicateEntryValidation(event);
+        }
+        return isValidEventSelected;
+    }
+
     private static void eventEditingSelectionClose() {
-        duplicateEntryValidation = false;
+        duplicateEntry = false;
         selectEvent = 0;
         clearEventListCache();
     }
@@ -138,17 +144,17 @@ public class EventEditingMenu {
     private static boolean duplicateEntryValidation(Event event) throws SQLException {
         boolean isValidEventSelected;
         isValidEventSelected = true;
-        duplicateEntryValidation = true;
-        uploadParticipantList(MainMenu.url, MainMenu.username, MainMenu.password);
+        duplicateEntry = true;
+        uploadParticipantList();
         for (EventDetails details : eventDetailList) {
             if (details.eventId == selectEvent && details.userId == DataRefresh.currentUserId) {
-                duplicateEntryValidation = false;
+                duplicateEntry = false;
                 break;
             }
         }
-        if (duplicateEntryValidation) {
+        if (duplicateEntry) {
             System.out.println("Event " + event.getId() + " selected.");
-            newParticipantUpload(MainMenu.url, MainMenu.username, MainMenu.password);
+            newParticipantUpload();
         } else {
             System.out.println("You have already joined this event!");
         }
@@ -165,8 +171,8 @@ public class EventEditingMenu {
         eventEdit();
     }
 
-    static void eventStatusChange(String url, String username, String password) throws SQLException {
-        Connection connection = DriverManager.getConnection(url, username, password);
+    static void eventStatusChange() throws SQLException {
+        Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
         String sqlString = "update events set isActive = " + eventStatusConst + " WHERE id =" + selectEvent + ";";
         statement.executeUpdate(sqlString);
@@ -175,10 +181,11 @@ public class EventEditingMenu {
         System.out.println("Event status changed!");
     }
 
-    private static void newParticipantUpload(String url, String username, String password) throws SQLException {
-        Connection connection = DriverManager.getConnection(url, username, password);
+    private static void newParticipantUpload() throws SQLException {
+        Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
-        String sqlString = "INSERT INTO `event details` (eventID, userLogin, userId) VALUES ('" + selectEvent + "', '" + LoginSystem.currentUser + "', '" + DataRefresh.currentUserId + "');";
+        String sqlString = "INSERT INTO `event details` (eventID, userLogin, userId) VALUES ('" + selectEvent + "', '"
+                + LoginSystem.currentUser + "', '" + DataRefresh.currentUserId + "');";
         statement.executeUpdate(sqlString);
         statement.close();
         connection.close();
@@ -193,6 +200,14 @@ public class EventEditingMenu {
             } else if (event.getId() > 0 && !event.getIsActive()) {
                 System.out.println(event.getId() + " - is Inactive.");
             }
+        }
+    }
+
+    private static void validateEventEditingScenario(Statement statement) throws SQLException {
+        if (showParticipantList) {
+            resultSet = statement.executeQuery("SELECT * FROM `event details` WHERE eventID='" + selectEvent + "'");
+        } else if (duplicateEntry) {
+            resultSet = statement.executeQuery("select * from `event details`");
         }
     }
 }
