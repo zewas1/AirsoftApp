@@ -16,7 +16,6 @@ public class LoginSystem {
     public static int userIsAdmin;
     public static String currentUser = null;
 
-
     public static void loginCheck() {
         String tryUsername;
         String tryPassword;
@@ -36,6 +35,11 @@ public class LoginSystem {
         }
     }
 
+    /**
+     * @param tryUsername
+     * @param tryPassword
+     * @param user
+     */
     private static void validateLoginInput(String tryUsername, String tryPassword, User user) {
         if (user.getUserLogin().equalsIgnoreCase(tryUsername)) {
             if (PasswordHashing.checkPassword(tryPassword, user.getUserPassword())) {
@@ -47,6 +51,12 @@ public class LoginSystem {
         }
     }
 
+    /**
+     * @param url
+     * @param username
+     * @param password
+     * @throws SQLException
+     */
     public static void getUsersFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();

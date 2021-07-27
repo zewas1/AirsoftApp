@@ -14,6 +14,12 @@ public class UserCreation {
     private static boolean passwordFit = false;
     private static boolean usernameFit = false;
 
+    /**
+     * @param url
+     * @param username
+     * @param password
+     * @throws SQLException
+     */
     public static void userCreation(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
@@ -28,6 +34,9 @@ public class UserCreation {
         connection.close();
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void usernameCreation() throws SQLException {
         LoginSystem.getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
         if (LoginSystem.userList.isEmpty()) {
