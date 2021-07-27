@@ -3,6 +3,11 @@ package LoginSystem;
 import java.util.regex.Pattern;
 
 public class PasswordCheck {
+
+    /**
+     * @param password
+     * @return
+     */
     public static boolean isValid(String password) {
         final String passwordRegex = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
 
