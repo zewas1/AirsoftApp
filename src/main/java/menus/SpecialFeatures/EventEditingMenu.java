@@ -3,11 +3,14 @@ package menus.SpecialFeatures;
 import LoginSystem.LoginSystem;
 import LoginSystem.Objects.Event;
 import LoginSystem.Objects.EventDetails;
+import LoginSystem.Objects.User;
 import LoginSystem.Utilities.DataRefresh;
+import Views.Menus.SpecialFeatures.EventEditingMenuView;
 import main.MainClass;
 import menus.AdminMenu;
 import menus.MainMenu;
 import menus.UserMenu;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,15 +34,18 @@ public class EventEditingMenu {
 
     private static ResultSet resultSet;
 
+    /**
+     * @throws SQLException
+     */
     private static void eventEdit() throws SQLException {
         int getEventEditSelection;
 
         do {
-            eventEditMenu();
+            EventEditingMenuView.eventEditMenu();
             getEventEditSelection = Integer.parseInt(MainClass.scan.next());
             switch (getEventEditSelection) {
                 case seeParticipatingPlayers:
-                    showParticipantList();
+                    getParticipantsList();
                     break;
                 case changeEventStatus:
                     eventStatusChange();
@@ -48,7 +54,7 @@ public class EventEditingMenu {
                     break;
                 default:
                     System.out.println("No such menu option.");
-                    eventEditMenu();
+                    EventEditingMenuView.eventEditMenu();
                     break;
             }
         } while (getEventEditSelection != quitEventEditMenu);
@@ -59,14 +65,10 @@ public class EventEditingMenu {
         eventDetailListComparison.clear();
     }
 
-    private static void eventEditMenu() {
-        clearEventListCache();
-        System.out.println("1. See participating player list.");
-        System.out.println("2. Change event status.");
-        System.out.println("3. Exit.");
-    }
-
-    private static void showParticipantList() throws SQLException {
+    /**
+     * @throws SQLException
+     */
+    private static void getParticipantsList() throws SQLException {
         showParticipantList = true;
         uploadParticipantList();
         for (EventDetails event : eventDetailList) {
@@ -75,6 +77,9 @@ public class EventEditingMenu {
         showParticipantList = false;
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void uploadParticipantList() throws SQLException {
         Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
@@ -83,9 +88,9 @@ public class EventEditingMenu {
             while (resultSet.next()) {
                 EventDetails event = new EventDetails();
                 event.setId(resultSet.getInt("id"));
-                event.setEventId(resultSet.getInt("eventID"));
+                event.setEvent((Event) resultSet.getObject("eventId"));
                 event.setUserLogin(resultSet.getString("userLogin"));
-                event.setUserId(resultSet.getInt("userId"));
+                event.setUser((User) resultSet.getObject("userId"));
                 event.setEventKills(resultSet.getInt("eventKills"));
                 event.setEventDeaths(resultSet.getInt("eventDeaths"));
                 event.setEventAssists(resultSet.getInt("eventAssists"));
@@ -97,6 +102,9 @@ public class EventEditingMenu {
         connection.close();
     }
 
+    /**
+     * @throws SQLException
+     */
     public static void EventEditingSelection() throws SQLException {
         boolean isValidEventSelected = false;
         eventSelectionList();
@@ -124,7 +132,14 @@ public class EventEditingMenu {
         eventEditingSelectionClose();
     }
 
-    private static boolean userTypeValidation(boolean isValidEventSelected, Event event) throws SQLException {
+    /**
+     *
+     * @param isValidEventSelected
+     * @param event
+     * @return boolean isValidEventSelected
+     * @throws SQLException
+     */
+    private static boolean userTypeValidation(boolean isValidEventSelected, @NotNull Event event) throws SQLException {
         if (selectEvent == event.getId() && AdminMenu.adminInputValidation) {
             isValidEventSelected = true;
             eventEditValidation(event);
@@ -132,6 +147,7 @@ public class EventEditingMenu {
                 event.getId() == selectEvent && event.getIsActive() && AdminMenu.adminInputValidation) {
             isValidEventSelected = duplicateEntryValidation(event);
         }
+
         return isValidEventSelected;
     }
 
@@ -141,13 +157,16 @@ public class EventEditingMenu {
         clearEventListCache();
     }
 
+    /**
+     * @param event
+     * @return bool
+     * @throws SQLException
+     */
     private static boolean duplicateEntryValidation(Event event) throws SQLException {
-        boolean isValidEventSelected;
-        isValidEventSelected = true;
         duplicateEntry = true;
         uploadParticipantList();
         for (EventDetails details : eventDetailList) {
-            if (details.eventId == selectEvent && details.userId == DataRefresh.currentUserId) {
+            if (details.getEvent().getId() == selectEvent && details.getUser().getUserId() == DataRefresh.currentUserId) {
                 duplicateEntry = false;
                 break;
             }
@@ -158,10 +177,14 @@ public class EventEditingMenu {
         } else {
             System.out.println("You have already joined this event!");
         }
-        return isValidEventSelected;
+
+        return true;
     }
 
-    private static void eventEditValidation(Event event) throws SQLException {
+    /**
+     * @throws SQLException
+     */
+    private static void eventEditValidation(@org.jetbrains.annotations.NotNull Event event) throws SQLException {
         System.out.println("Event " + event.getId() + " selected.");
         if (event.getIsActive()) {
             eventStatusConst = false;
@@ -171,6 +194,9 @@ public class EventEditingMenu {
         eventEdit();
     }
 
+    /**
+     * @throws SQLException
+     */
     static void eventStatusChange() throws SQLException {
         Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
@@ -181,6 +207,9 @@ public class EventEditingMenu {
         System.out.println("Event status changed!");
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void newParticipantUpload() throws SQLException {
         Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
@@ -191,6 +220,9 @@ public class EventEditingMenu {
         connection.close();
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void eventSelectionList() throws SQLException {
         EventMenu.getEventsFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
         System.out.println("Select Event by ID. Type in '0' to leave.");
@@ -203,6 +235,10 @@ public class EventEditingMenu {
         }
     }
 
+    /**
+     * @param statement - Sql statement
+     * @throws SQLException
+     */
     private static void validateEventEditingScenario(Statement statement) throws SQLException {
         if (showParticipantList) {
             resultSet = statement.executeQuery("SELECT * FROM `event details` WHERE eventID='" + selectEvent + "'");

@@ -1,5 +1,6 @@
 package menus.SpecialFeatures;
 
+import Views.Menus.SpecialFeatures.EventMenuView;
 import main.MainClass;
 import menus.MainMenu;
 import LoginSystem.Objects.Event;
@@ -16,10 +17,12 @@ public class EventMenu {
     public static List<Event> eventList = new ArrayList<>();
     public static List<Event> eventListComparison = new ArrayList<>();
 
-
+    /**
+     * @throws SQLException
+     */
     public static void openEventMenu() throws SQLException {
         do {
-            getCreateEventMenu();
+            EventMenuView.getCreateEventMenu();
             switch (MainClass.menuSelection) {
                 case doCreateEvent:
                     createNewEvent();
@@ -31,25 +34,15 @@ public class EventMenu {
                     break;
                 default:
                     System.out.println("No such menu option.");
-                    getCreateEventMenu();
+                    EventMenuView.getCreateEventMenu();
                     break;
             }
         } while (MainClass.menuSelection != doExitEventMenu);
     }
 
-    private static void getCreateEventMenu() {
-        eventListCacheClear();
-        System.out.println("Please choose one of the available options:");
-        System.out.println("1. Create a new event.");
-        System.out.println("2. Check created events.");
-        System.out.println("3. Exit.");
-        try {
-            MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
-        } catch (NumberFormatException e) {
-            System.out.println("Only numbers are allowed.");
-        }
-    }
-
+    /**
+     * @throws SQLException
+     */
     static void createNewEvent() throws SQLException {
         Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
@@ -65,6 +58,12 @@ public class EventMenu {
         eventListComparison.clear();
     }
 
+    /**
+     * @param url
+     * @param username
+     * @param password
+     * @throws SQLException
+     */
     public static void getEventsFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();

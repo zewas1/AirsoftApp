@@ -2,12 +2,12 @@ package menus;
 
 import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.LoginSystem;
+import Views.Menus.UserMenuViews;
 import main.MainClass;
 import menus.SpecialFeatures.EventEditingMenu;
 import menus.SpecialFeatures.EventMenu;
 import menus.SpecialFeatures.TeamMenu;
 import menus.SpecialFeatures.TopFiveMenu;
-
 import java.sql.SQLException;
 
 public class UserMenu {
@@ -20,12 +20,15 @@ public class UserMenu {
     private static final int doExitMenu = 6;
     public static boolean userInputValidation = false;
 
+    /**
+     * @throws SQLException
+     */
     public static void getUserMenu() throws SQLException {
         do {
-            getMenuSelection();
+            UserMenuViews.getMenuSelection();
             switch (MainClass.menuSelection) {
                 case doShowStats:
-                    showMyStats();
+                    UserMenuViews.showMyStats();
                     break;
                 case doCountKda:
                     countKda();
@@ -43,14 +46,17 @@ public class UserMenu {
                     break;
                 default:
                     System.out.println("No such menu option.");
-                    getMenuSelection();
+                    UserMenuViews.getMenuSelection();
                     break;
             }
         } while (MainClass.menuSelection != doExitMenu);
         userDisconnected();
     }
 
-    static void countKda() throws SQLException {
+    /**
+     * @throws SQLException
+     */
+    public static void countKda() throws SQLException {
         DataRefresh.statRefresh();
         try {
             kdaCalculations();
@@ -78,29 +84,9 @@ public class UserMenu {
         }
     }
 
-    static void showMyStats() throws SQLException {
-        DataRefresh.statRefresh();
-        System.out.println("Kill count: " + DataRefresh.selectedUserKills);
-        System.out.println("Death count: " + DataRefresh.selectedUserDeaths);
-        System.out.println("Assist count: " + DataRefresh.selectedUserAssists);
-    }
-
-    private static void getMenuSelection() {
-        System.out.println("Welcome, " + LoginSystem.currentUser);
-        System.out.println("This is a user menu. Available functions are:");
-        System.out.println("1. Check your stats");
-        System.out.println("2. Calculate KDA");
-        System.out.println("3. Join on-going events.");
-        System.out.println("4. Teams menu.");
-        System.out.println("5. Top five players.");
-        System.out.println("6. Exit menu.");
-        try {
-            MainClass.menuSelection = Integer.parseInt(MainClass.scan.next());
-        } catch (NumberFormatException e) {
-            System.out.println("Only numbers are allowed.");
-        }
-    }
-
+    /**
+     * @throws SQLException
+     */
     public static void joinCurrentEvents() throws SQLException {
         EventEditingMenu.EventEditingSelection();
         EventMenu.eventListCacheClear();

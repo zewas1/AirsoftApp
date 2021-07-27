@@ -1,5 +1,6 @@
 package menus.SpecialFeatures;
 
+import Views.Menus.SpecialFeatures.TeamManagementMenuView;
 import main.MainClass;
 
 public class TeamManagementMenu {
@@ -8,13 +9,13 @@ public class TeamManagementMenu {
     private static final int doCreateTeam = 1;
     private static final int doKickPlayers = 2;
     private static final int doExitMenu = 3;
-    private static int teamManagementSelection = 0;
+
 
     public static void openTeamManagementMenu() {
 
         do {
-            getTeamManagementSelection();
-            switch (teamManagementSelection) {
+            TeamManagementMenuView.getTeamManagementSelection();
+            switch (MainClass.menuSelection) {
                 case doCreateTeam:
                     System.out.println("Create a team.");
                     createTeam();
@@ -27,23 +28,10 @@ public class TeamManagementMenu {
                     break;
                 default:
                     System.out.println("No such menu option.");
-                    getTeamManagementSelection();
+                    TeamManagementMenuView.getTeamManagementSelection();
                     break;
             }
-        } while (teamManagementSelection != doExitMenu);
-    }
-
-
-    private static void getTeamManagementSelection() {
-        System.out.println("Please choose one of the available options:");
-        System.out.println("1. Create a team.");
-        System.out.println("2. Kick player from team.");
-        System.out.println("3. Exit.");
-        try {
-            teamManagementSelection = Integer.parseInt(MainClass.scan.next());
-        } catch (NumberFormatException e) {
-            System.out.println("Only numbers are allowed.");
-        }
+        } while (MainClass.menuSelection != doExitMenu);
     }
 
     private static void createTeam() {
@@ -53,6 +41,5 @@ public class TeamManagementMenu {
     private static void kickPlayers() {
 
     }
-
 
 }

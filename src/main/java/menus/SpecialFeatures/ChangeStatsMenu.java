@@ -3,6 +3,7 @@ package menus.SpecialFeatures;
 import LoginSystem.LoginSystem;
 import LoginSystem.Utilities.DataRefresh;
 import LoginSystem.Objects.User;
+import Views.Menus.SpecialFeatures.ChangeStatsMenuView;
 import main.MainClass;
 import menus.MainMenu;
 
@@ -25,14 +26,9 @@ public class ChangeStatsMenu {
     private static final int exitChangeStats = 4;
     private static final int quitUserSelection = 0;
 
-    private static void specialChangeStatsMenu() {
-        System.out.println("What stats would you like to change?");
-        System.out.println("1. Kill count.");
-        System.out.println("2. Death count.");
-        System.out.println("3. Assist count.");
-        System.out.println("4. Exit.");
-    }
-
+    /**
+     * @throws SQLException
+     */
     public static void specialSelectUser() throws SQLException {
         boolean isValidUserSelected = false;
         showUserList();
@@ -41,9 +37,9 @@ public class ChangeStatsMenu {
             for (User user : LoginSystem.userList) {
                 if (user.getUserId() == selectUser) {
                     isValidUserSelected = true;
-                    System.out.println("User " + user.userLogin + " selected.");
+                    System.out.println("User " + user.getUserLogin() + " selected.");
                     DataRefresh.statRefresh();
-                    showSelectUserStats();
+                    ChangeStatsMenuView.showSelectUserStats();
                     specialChangeStats();
                 } else if (selectUser == quitUserSelection) {
                     System.out.println("You have left the menu.");
@@ -60,6 +56,9 @@ public class ChangeStatsMenu {
         selectUser = 0;
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void showUserList() throws SQLException {
         LoginSystem.getUsersFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
         System.out.println("Select user by ID. Type '0' to leave this menu.");
@@ -68,6 +67,9 @@ public class ChangeStatsMenu {
         }
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void specialChangeStat() throws SQLException {
         for (User user : LoginSystem.userList) {
             if (user.getUserId() == selectUser) {
@@ -78,21 +80,27 @@ public class ChangeStatsMenu {
         }
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void statChangeAction() throws SQLException {
         if (setStat != quitUserSelection) {
             uploadStatChanges();
             DataRefresh.statRefresh();
-            showSelectUserStats();
+            ChangeStatsMenuView.showSelectUserStats();
         } else {
             System.out.println("You have left the menu.");
         }
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void specialChangeStats() throws SQLException {
         int getSelectStatChange;
 
         do {
-            specialChangeStatsMenu();
+            ChangeStatsMenuView.specialChangeStatsMenu();
             getSelectStatChange = Integer.parseInt(MainClass.scan.next());
             switch (getSelectStatChange) {
                 case changeKillCount:
@@ -114,12 +122,15 @@ public class ChangeStatsMenu {
                     break;
                 default:
                     System.out.println("No such menu option.");
-                    specialChangeStatsMenu();
+                    ChangeStatsMenuView.specialChangeStatsMenu();
                     break;
             }
         } while (getSelectStatChange != exitChangeStats);
     }
 
+    /**
+     * @throws SQLException
+     */
     private static void uploadStatChanges() throws SQLException {
         Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
@@ -129,10 +140,4 @@ public class ChangeStatsMenu {
         connection.close();
     }
 
-    private static void showSelectUserStats() {
-        System.out.println("Stat info:");
-        System.out.println("Kills: " + DataRefresh.selectedUserKills);
-        System.out.println("Deaths: " + DataRefresh.selectedUserDeaths);
-        System.out.println("Assists: " + DataRefresh.selectedUserAssists);
-    }
 }

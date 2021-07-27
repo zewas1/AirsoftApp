@@ -12,15 +12,22 @@ public class TopFiveMenu {
     private static List<User> playerList = new ArrayList<>();
     private static List<User> playerListComparison = new ArrayList<>();
 
+    /**
+     * @throws SQLException
+     */
     public static void topFivePlayers() throws SQLException {
         clearLists();
         Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
         getRanksFromDb(statement);
         connection.close();
-        showTopFive();
+        getTopFivePlayers();
     }
 
+    /**
+     * @param statement
+     * @throws SQLException
+     */
     private static void getRanksFromDb(Statement statement) throws SQLException {
         if (playerList.size() > playerListComparison.size() || playerList.isEmpty()) {
             ResultSet resultSet = statement.executeQuery("SELECT userLogin, killCount, RANK() OVER" +
@@ -37,7 +44,7 @@ public class TopFiveMenu {
         }
     }
 
-    private static void showTopFive() {
+    private static void getTopFivePlayers() {
         for (User user : playerList) {
             int maxTopPlayers = 5;
             if (user.getPlayerRank() <= maxTopPlayers) {
@@ -51,4 +58,3 @@ public class TopFiveMenu {
         playerListComparison.clear();
     }
 }
-
