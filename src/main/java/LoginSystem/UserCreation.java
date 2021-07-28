@@ -49,7 +49,6 @@ public class UserCreation {
             } while (!usernameFit);
         }
         LoginSystem.userList.clear();
-        LoginSystem.userListComparison.clear();
     }
 
     private static void validateUserLogin() {

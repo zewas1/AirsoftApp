@@ -55,7 +55,6 @@ public class MainMenu {
      */
     private static void checkUserConnection() throws SQLException {
         LoginSystem.getUsersFromDb(url, username, password);
-        LoginSystem.userListComparison = LoginSystem.userList;
         LoginSystem.loginCheck();
     }
 

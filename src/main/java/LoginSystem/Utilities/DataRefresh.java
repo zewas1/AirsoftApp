@@ -11,7 +11,6 @@ import java.util.List;
 
 public class DataRefresh {
     public static List<User> showDataList = new ArrayList<>();
-    private static List<User> showDataListComparison = new ArrayList<>();
     public static int currentUserId = 0;
     public static int selectedUserKills = 0;
     public static int selectedUserDeaths = 0;
@@ -19,7 +18,6 @@ public class DataRefresh {
 
     public static void statRefresh() throws SQLException {
         showDataList.clear();
-        showDataListComparison.clear();
         getDataFromDb(MainMenu.url, MainMenu.username, MainMenu.password);
         if (ChangeStatsMenu.selectUser == 0) {
             ChangeStatsMenu.selectUser = currentUserId;
@@ -36,7 +34,6 @@ public class DataRefresh {
     public static void getDataFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
-        if (showDataList.size() > showDataListComparison.size() || showDataList.isEmpty()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
             while (resultSet.next()) {
                 User user = new User();
@@ -52,13 +49,11 @@ public class DataRefresh {
             }
             resultSet.close();
             statement.close();
-        }
         connection.close();
     }
 
     public static void userListRefresh() {
         LoginSystem.userList.clear();
-        LoginSystem.userListComparison.clear();
         ChangeStatsMenu.selectUser = 0;
     }
 }

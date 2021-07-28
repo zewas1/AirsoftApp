@@ -96,6 +96,5 @@ public class UserMenu {
         LoginSystem.loginSuccessful = false;
         DataRefresh.userListRefresh();
         EventMenu.eventList.clear();
-        EventMenu.eventListComparison.clear();
     }
 }
