@@ -22,7 +22,6 @@ public class EventEditingMenu {
     public static boolean eventStatusConst = true;
 
     public static List<EventDetails> eventDetailList = new ArrayList<>();
-    public static List<EventDetails> eventDetailListComparison = new ArrayList<>();
 
     private static final int seeParticipatingPlayers = 1;
     private static final int changeEventStatus = 2;
@@ -62,7 +61,6 @@ public class EventEditingMenu {
 
     private static void clearEventListCache() {
         eventDetailList.clear();
-        eventDetailListComparison.clear();
     }
 
     /**
@@ -83,7 +81,6 @@ public class EventEditingMenu {
     private static void uploadParticipantList() throws SQLException {
         Connection connection = DriverManager.getConnection(MainMenu.url, MainMenu.username, MainMenu.password);
         Statement statement = connection.createStatement();
-        if (eventDetailList.size() > eventDetailListComparison.size() || eventDetailList.isEmpty()) {
             validateEventEditingScenario(statement);
             while (resultSet.next()) {
                 EventDetails event = new EventDetails();
@@ -98,7 +95,6 @@ public class EventEditingMenu {
             }
             resultSet.close();
             statement.close();
-        }
         connection.close();
     }
 

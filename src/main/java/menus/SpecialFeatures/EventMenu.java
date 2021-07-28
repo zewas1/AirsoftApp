@@ -15,7 +15,6 @@ public class EventMenu {
     private static final int doEditEvent = 2;
     private static final int doExitEventMenu = 3;
     public static List<Event> eventList = new ArrayList<>();
-    public static List<Event> eventListComparison = new ArrayList<>();
 
     /**
      * @throws SQLException
@@ -55,7 +54,6 @@ public class EventMenu {
 
     public static void eventListCacheClear() {
         eventList.clear();
-        eventListComparison.clear();
     }
 
     /**
@@ -67,7 +65,6 @@ public class EventMenu {
     public static void getEventsFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
-        if (eventList.size() > eventListComparison.size() || eventList.isEmpty()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM events");
             while (resultSet.next()) {
                 Event event = new Event();
@@ -77,7 +74,6 @@ public class EventMenu {
             }
             resultSet.close();
             statement.close();
-        }
         connection.close();
     }
 }

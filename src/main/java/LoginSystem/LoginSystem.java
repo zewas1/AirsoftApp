@@ -11,22 +11,21 @@ import LoginSystem.Objects.User;
 public class LoginSystem {
     public static final Scanner scan = new Scanner(System.in);
     public static List<User> userList = new ArrayList<>();
-    public static List<User> userListComparison = new ArrayList<>();
     public static boolean loginSuccessful = false;
     public static int userIsAdmin;
     public static String currentUser = null;
 
     public static void loginCheck() {
-        String tryUsername;
-        String tryPassword;
+        String userName;
+        String password;
 
         System.out.println("Please type in your username:");
-        tryUsername = scan.next();
+        userName = scan.next();
         System.out.println("Please type in your password:");
-        tryPassword = scan.next();
+        password = scan.next();
 
         for (User user : userList) {
-            validateLoginInput(tryUsername, tryPassword, user);
+            validateLoginInput(userName, password, user);
         }
         if (loginSuccessful) {
             System.out.println("Login successful");
@@ -36,13 +35,13 @@ public class LoginSystem {
     }
 
     /**
-     * @param tryUsername
-     * @param tryPassword
+     * @param userName
+     * @param password
      * @param user
      */
-    private static void validateLoginInput(String tryUsername, String tryPassword, User user) {
-        if (user.getUserLogin().equalsIgnoreCase(tryUsername)) {
-            if (PasswordHashing.checkPassword(tryPassword, user.getUserPassword())) {
+    private static void validateLoginInput(String userName, String password, User user) {
+        if (user.getUserLogin().equalsIgnoreCase(userName)) {
+            if (PasswordHashing.checkPassword(password, user.getUserPassword())) {
                 loginSuccessful = true;
                 currentUser = user.getUserLogin();
                 userIsAdmin = user.getIsAdmin();
@@ -60,7 +59,7 @@ public class LoginSystem {
     public static void getUsersFromDb(String url, String username, String password) throws SQLException {
         Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();
-        if (userList.size() > userListComparison.size() || userList.isEmpty()) {
+        if (userList.isEmpty()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
             while (resultSet.next()) {
                 User user = new User();

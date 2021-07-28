@@ -10,7 +10,7 @@ import java.util.List;
 public class TopFiveMenu {
 
     private static List<User> playerList = new ArrayList<>();
-    private static List<User> playerListComparison = new ArrayList<>();
+    private static final int maxTopPlayers = 5;
 
     /**
      * @throws SQLException
@@ -29,9 +29,8 @@ public class TopFiveMenu {
      * @throws SQLException
      */
     private static void getRanksFromDb(Statement statement) throws SQLException {
-        if (playerList.size() > playerListComparison.size() || playerList.isEmpty()) {
             ResultSet resultSet = statement.executeQuery("SELECT userLogin, killCount, RANK() OVER" +
-                    " (ORDER BY killCount DESC) as playerRank from users;");
+                    " (ORDER BY killCount DESC) as playerRank from users LIMIT " + maxTopPlayers+ ";");
             while (resultSet.next()) {
                 User user = new User();
                 user.setUserLogin(resultSet.getString("userLogin"));
@@ -41,12 +40,10 @@ public class TopFiveMenu {
             }
             resultSet.close();
             statement.close();
-        }
     }
 
     private static void getTopFivePlayers() {
         for (User user : playerList) {
-            int maxTopPlayers = 5;
             if (user.getPlayerRank() <= maxTopPlayers) {
                 System.out.println("User " + user.getUserLogin() + " is " + user.getPlayerRank() + " with " + user.getKillCount() + " kills");
             }
@@ -55,6 +52,6 @@ public class TopFiveMenu {
 
     private static void clearLists() {
         playerList.clear();
-        playerListComparison.clear();
+       // playerListComparison.clear();
     }
 }
