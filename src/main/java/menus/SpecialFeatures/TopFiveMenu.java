@@ -50,6 +50,5 @@ public class TopFiveMenu {
 
     private static void clearLists() {
         playerList.clear();
-       // playerListComparison.clear();
     }
 }
