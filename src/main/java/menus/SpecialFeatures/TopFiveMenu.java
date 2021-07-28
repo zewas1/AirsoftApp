@@ -44,14 +44,11 @@ public class TopFiveMenu {
 
     private static void getTopFivePlayers() {
         for (User user : playerList) {
-            if (user.getPlayerRank() <= maxTopPlayers) {
                 System.out.println("User " + user.getUserLogin() + " is " + user.getPlayerRank() + " with " + user.getKillCount() + " kills");
-            }
         }
     }
 
     private static void clearLists() {
         playerList.clear();
-       // playerListComparison.clear();
     }
 }

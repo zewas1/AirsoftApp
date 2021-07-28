@@ -5,14 +5,15 @@ import LoginSystem.Objects.User;
 import LoginSystem.UserCreation;
 import LoginSystem.Utilities.DataRefresh;
 import Views.Menus.MainMenuViews;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.SQLException;
 
 public class MainMenu {
-
-    public static final String url = "jdbc:mysql://127.0.0.1:3306/airsoftapp?useSSL=false";
-    public static final String username = "appuser"; //  system username
-    public static final String password = "K5991FXi"; // system password.
+    private static Dotenv dotenv = Dotenv.load();
+    public static final String url = dotenv.get("DB_HOSTNAME");
+    public static final String username = dotenv.get("DB_USER");
+    public static final String password = dotenv.get("DB_PASSWORD");
 
     public static int selection = 0;
 
